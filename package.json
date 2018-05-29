@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "serve src",
-    "lint": "npm run lint:js"
+  "start": "serve src",
+  "lint": "npm run lint:js",
+  "lint:js": "eslint .",
+  "lint:fix": "eslint --fix ."
   },
   "devDependencies": {
     "eslint": "^4.19.1",
