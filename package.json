@@ -1,0 +1,36 @@
+{
+  "name": "paris-0218-2pac-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1"
+  },
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "eject": "react-scripts eject",
+  "lint": "npm run lint:js",
+  "lint:js": "eslint .",
+  "lint:fix": "eslint --fix ."
+  },
+"devDependencies": {
+  "eslint": "^4.19.1",
+  "eslint-config-standard": "^11.0.0",
+  "eslint-plugin-import": "^2.12.0",
+  "eslint-plugin-node": "^6.0.1",
+  "eslint-plugin-promise": "^3.8.0",
+  "eslint-plugin-standard": "^3.1.0",
+  },
+"repository": {
+  "type": "git",
+  "url": "git+https://github.com/WildCodeSchool/paris-0218-2pac-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WildCodeSchool/paris-0218-2pac-server/issues"
+  },
+  "homepage": "https://github.com/WildCodeSchool/paris-0218-2pac-server#readme"
+}
