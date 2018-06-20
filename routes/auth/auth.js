@@ -27,20 +27,46 @@ const exec = async (query, params) => {
 
 
 // création d'un article
-
 app.post('/createArticle', (req, res, next) => {
-
-  const query = exec(`INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription) VALUES (?,?,?,?,?,?,?)`,
-    [req.body.title, req.body.shortDescription, req.body.description, req.body.eventDate, req.body.categoryId, req.body.imageURL, req.body.imageDescription],
-    (error, results, fields) => {
-      if (error)
-        res.status(500).json(error.message)
-      else
-        res.status(200).json('oki')
-    })
+  exec(`
+    INSERT INTO articles
+      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+    VALUES
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription)`,
+    req.body)
+  .then(result => res.status(200).json('oki'))
+  .catch(next)
 })
 
+// mise à jour d'un article
+app.put('/updateArticle/:id', (req, res, next) => {
 
+  exec(`
+    UPDATE articles
+    SET
+      title=:title,
+      shortDescription=:shortDescription,
+      description=:description,
+      eventDate=:eventDate,
+      categoryId=:categoryId,
+      imageURL=:imageURL,
+      imageDescription=:imageDescription
+    WHERE id=:id`, {
+      ...req.body,
+      id: req.params.id
+    })
+  .then(res => res.status(200).json('oki'))
+  .catch(next)
+  })
+
+// suppression des données des articles de la BDD
+const deleteArticle = id => exec(`DELETE FROM articles WHERE id=:id`, [ id ])
+
+app.delete('/deleteArticle/:id', (req, res, next) => {
+    deleteArticle()
+    .then(articles => res.json(articles))
+    .catch(next)
+})
 
 // récupération des articles
 const getArticles= () => exec(`SELECT * FROM  articles;`)
@@ -52,6 +78,61 @@ app.get('/getArticles/', (req, res, next) => {
     .catch(next)
 })
 
+/*DOCUMENTS */
+// récupération des documents
+const getDocuments= () => exec(`SELECT * FROM  documents;`)
 
-module.exports =   app;
+
+app.get('/getDocuments/', (req, res, next) => {
+     getDocuments()
+    .then(documents => res.json(documents))
+    .catch(next)
+})
+
+// création d'un document
+app.post('/createDocument', (req, res, next) => {
+  exec(`
+    INSERT INTO documents
+      (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+    VALUES
+      (:typeId, :title, :shortDescription, :url, :isMemberOnly, :isResource, :isArchived)`,
+    req.body)
+  .then(result => res.status(200).json('oki'))
+  .catch(next)
+})
+
+
+//supression d'un document
+
+const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
+
+app.delete('/deleteDocument/:id', (req, res, next) => {
+    deleteDocument()
+    .then(documents => res.json(documents))
+    .catch(next)
+})
+
+//mise à jour d'un document
+
+app.put('/updateDocument/:id', (req, res, next) => {
+
+  exec(`
+    UPDATE documents
+    SET
+      typeId=:typeId,
+      title=:title,
+      shortDescription=:shortDescription,
+      url=:url,
+      isMemberOnly=:isMemberOnly,
+      isResource=:isResource,
+      isArchived=:isArchived
+    WHERE id=:id`, {
+      ...req.body,
+      id: req.params.id
+    })
+  .then(res => res.status(200).json('oki'))
+  .catch(next)
+  })
+
+module.exports =  app;
 
