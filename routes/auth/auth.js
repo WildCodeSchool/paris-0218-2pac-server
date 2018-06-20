@@ -1,5 +1,5 @@
 const express = require('express')
-//const router = express.Router()
+// const router = express.Router()
 const connection = require('../../sql/db.js')
 const bodyParser = require('body-parser')
 const app = express()
@@ -17,14 +17,12 @@ app.use((req, res, next) => {
   next()
 })
 
-
 const exec = async (query, params) => {
   const connect = await connection
   const result = await connect.execute(query, params)
 
   return result[0]
 }
-
 
 // création d'un article
 app.post('/createArticle', (req, res, next) => {
@@ -33,14 +31,13 @@ app.post('/createArticle', (req, res, next) => {
       (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
     VALUES
       (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription)`,
-    req.body)
-  .then(result => res.status(200).json('oki'))
-  .catch(next)
+  req.body)
+    .then(result => res.status(200).json('oki'))
+    .catch(next)
 })
 
 // mise à jour d'un article
 app.put('/updateArticle/:id', (req, res, next) => {
-
   exec(`
     UPDATE articles
     SET
@@ -52,39 +49,37 @@ app.put('/updateArticle/:id', (req, res, next) => {
       imageURL=:imageURL,
       imageDescription=:imageDescription
     WHERE id=:id`, {
-      ...req.body,
-      id: req.params.id
-    })
-  .then(res => res.status(200).json('oki'))
-  .catch(next)
+    ...req.body,
+    id: req.params.id
   })
+    .then(res => res.status(200).json('oki'))
+    .catch(next)
+})
 
 // suppression des données des articles de la BDD
 const deleteArticle = id => exec(`DELETE FROM articles WHERE id=:id`, [ id ])
 
 app.delete('/deleteArticle/:id', (req, res, next) => {
-    deleteArticle()
+  deleteArticle()
     .then(articles => res.json(articles))
     .catch(next)
 })
 
 // récupération des articles
-const getArticles= () => exec(`SELECT * FROM  articles;`)
-
+const getArticles = () => exec(`SELECT * FROM  articles;`)
 
 app.get('/getArticles/', (req, res, next) => {
-     getArticles()
+  getArticles()
     .then(articles => res.json(articles))
     .catch(next)
 })
 
-/*DOCUMENTS */
+/* DOCUMENTS */
 // récupération des documents
-const getDocuments= () => exec(`SELECT * FROM  documents;`)
-
+const getDocuments = () => exec(`SELECT * FROM  documents;`)
 
 app.get('/getDocuments/', (req, res, next) => {
-     getDocuments()
+  getDocuments()
     .then(documents => res.json(documents))
     .catch(next)
 })
@@ -96,26 +91,24 @@ app.post('/createDocument', (req, res, next) => {
       (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
     VALUES
       (:typeId, :title, :shortDescription, :url, :isMemberOnly, :isResource, :isArchived)`,
-    req.body)
-  .then(result => res.status(200).json('oki'))
-  .catch(next)
+  req.body)
+    .then(result => res.status(200).json('oki'))
+    .catch(next)
 })
 
-
-//supression d'un document
+// supression d'un document
 
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
 app.delete('/deleteDocument/:id', (req, res, next) => {
-    deleteDocument()
+  deleteDocument()
     .then(documents => res.json(documents))
     .catch(next)
 })
 
-//mise à jour d'un document
+// mise à jour d'un document
 
 app.put('/updateDocument/:id', (req, res, next) => {
-
   exec(`
     UPDATE documents
     SET
@@ -127,12 +120,11 @@ app.put('/updateDocument/:id', (req, res, next) => {
       isResource=:isResource,
       isArchived=:isArchived
     WHERE id=:id`, {
-      ...req.body,
-      id: req.params.id
-    })
-  .then(res => res.status(200).json('oki'))
-  .catch(next)
+    ...req.body,
+    id: req.params.id
   })
+    .then(res => res.status(200).json('oki'))
+    .catch(next)
+})
 
-module.exports =  app;
-
+module.exports = app
