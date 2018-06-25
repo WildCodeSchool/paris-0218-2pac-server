@@ -25,7 +25,7 @@ name VARCHAR(50)
 INSERT INTO articles_categories (name) VALUES ("actualité");
 INSERT INTO articles_categories (name) VALUES ("évènement"); 
 INSERT INTO articles_categories (name) VALUES ("presse");
-INSERT INTO articles_categories (name) VALUES ("communiqués de presse");
+INSERT INTO articles_categories (name) VALUES ("communiqués de presse");
 
 CREATE TABLE articles
 (
