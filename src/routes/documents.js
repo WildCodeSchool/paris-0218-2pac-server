@@ -35,17 +35,14 @@ router.get('/documents', (req, res, next) => {
 
 // création d'un document
 router.post('/documents', upload.single("document"), (req, res, next) => {
-  console.log(req.file)
-  console.log(req.body)
+  // console.log(req.file)
+  // console.log(req.body)
   const file = req.file
-
 
   const doc = {
     ...req.body,
     url: file.filename //+ path.extname(file.originalname)
   }
-
-  return console.log(doc)
 
   db.newDocument(doc)
     .then(result => res.json('ok'))
