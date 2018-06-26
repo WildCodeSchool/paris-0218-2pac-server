@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 // const authRouter = require('./routes/auth/auth.js')
 const articlesRouter = require('./routes/articles.js')
 const documentsRouter = require('./routes/documents.js')
@@ -7,6 +8,10 @@ const bodyParser = require('body-parser')
 const app = express()
 
 // MIDDLEWARES
+
+const mediasFolderPath = path.join(__dirname, '../public')
+console.log({mediasFolderPath})
+app.use('/medias', express.static(mediasFolderPath))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,11 +24,17 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/', articlesRouter)
+app.use((req, res, next) => {
+  console.log(req.method, req.url)
+  next()
+})
+
 
 app.get('/', (req, res) => {
   res.send('Vous êtes connecté au serveur ;-)')
 })
+
+app.use('/', articlesRouter, documentsRouter)
 
 app.use(function (req, res, next) {
   const err = new Error('Not Found')
@@ -36,3 +47,4 @@ app.listen(1107, () => {
 })
 
 module.exports = app
+

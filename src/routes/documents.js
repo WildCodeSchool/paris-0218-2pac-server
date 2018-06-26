@@ -1,7 +1,31 @@
 const express = require('express')
+const path = require('path')
+const multer = require('multer')
 const router = express.Router()
 
 const db = require('../sql/db.js')
+
+const publicDocumentsPath = path.join(__dirname, '../../public/documents')
+console.log({publicDocumentsPath})
+const storage = multer.diskStorage({
+  destination: publicDocumentsPath,
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 30000000 // 30 MB
+  },
+  fileFilter: (req, files, cb) => {
+    // if (!files.mimetype.startsWith('image/')) { // accept image only
+    //   return cb(Error('Invalid file type'))
+    // }
+    cb(null, true)
+  }
+})
 
 router.get('/documents', (req, res, next) => {
   db.getDocuments()
@@ -10,8 +34,18 @@ router.get('/documents', (req, res, next) => {
 })
 
 // création d'un document
-router.post('/documents', (req, res, next) => {
-  const doc = req.body
+router.post('/documents', upload.single("document"), (req, res, next) => {
+  console.log(req.file)
+  console.log(req.body)
+  const file = req.file
+
+
+  const doc = {
+    ...req.body,
+    url: file.filename //+ path.extname(file.originalname)
+  }
+
+  return console.log(doc)
 
   db.newDocument(doc)
     .then(result => res.json('ok'))
