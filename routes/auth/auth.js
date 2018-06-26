@@ -1,24 +1,10 @@
 const express = require('express')
-// const router = express.Router()
+const router = express.Router()
 const connection = require('../../sql/db.js')
-const bodyParser = require('body-parser')
-const app = express()
+
 const jwt = require('jsonwebtoken')
 
 const jwtSecret = require('../../../jwtSecret')
-
-// MIDDLEWARES
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin)
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTION')
-  res.header('Access-Control-Allow-Credentials', 'true')
-  next()
-})
 
 const exec = async (query, params) => {
   const connect = await connection
@@ -28,7 +14,7 @@ const exec = async (query, params) => {
 }
 
 // création d'un article
-app.post('/createArticle', (req, res, next) => {
+router.post('/articles', (req, res, next) => {
   exec(`
     INSERT INTO articles
       (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
@@ -40,7 +26,7 @@ app.post('/createArticle', (req, res, next) => {
 })
 
 // mise à jour d'un article
-app.put('/updateArticle/:id', (req, res, next) => {
+router.put('/articles/:id', (req, res, next) => {
   exec(`
     UPDATE articles
     SET
@@ -62,7 +48,7 @@ app.put('/updateArticle/:id', (req, res, next) => {
 // suppression des données des articles de la BDD
 const deleteArticle = id => exec(`DELETE FROM articles WHERE id=:id`, [ id ])
 
-app.delete('/deleteArticle/:id', (req, res, next) => {
+router.delete('/articles/:id', (req, res, next) => {
   deleteArticle()
     .then(articles => res.json(articles))
     .catch(next)
@@ -71,7 +57,7 @@ app.delete('/deleteArticle/:id', (req, res, next) => {
 // récupération des articles
 const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
 
-app.get('/getArticles/', (req, res, next) => {
+router.get('/articles/', (req, res, next) => {
   getArticles()
     .then(articles => res.json(articles))
     .catch(next)
@@ -81,14 +67,14 @@ app.get('/getArticles/', (req, res, next) => {
 // récupération des documents
 const getDocuments = () => exec(`SELECT * FROM  documents;`)
 
-app.get('/getDocuments/', (req, res, next) => {
+router.get('/documents/', (req, res, next) => {
   getDocuments()
     .then(documents => res.json(documents))
     .catch(next)
 })
 
 // création d'un document
-app.post('/createDocument', (req, res, next) => {
+router.post('/documents', (req, res, next) => {
   exec(`
     INSERT INTO documents
       (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
@@ -103,7 +89,7 @@ app.post('/createDocument', (req, res, next) => {
 
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
-app.delete('/deleteDocument/:id', (req, res, next) => {
+router.delete('/documents/:id', (req, res, next) => {
   deleteDocument()
     .then(documents => res.json(documents))
     .catch(next)
@@ -111,7 +97,7 @@ app.delete('/deleteDocument/:id', (req, res, next) => {
 
 // mise à jour d'un document
 
-app.put('/updateDocument/:id', (req, res, next) => {
+router.put('/documents/:id', (req, res, next) => {
   exec(`
     UPDATE documents
     SET
@@ -133,7 +119,7 @@ app.put('/updateDocument/:id', (req, res, next) => {
 // récupération des catégories d'articles
 const getArticleCategories = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
 
-app.get('/getArticleCategories/', (req, res, next) => {
+router.get('/getArticleCategories/', (req, res, next) => {
   getArticleCategories()
     .then(articleCategories => res.json(articleCategories))
     .catch(next)
@@ -156,7 +142,7 @@ const getToken = req => {
 // récupération des utilisateurs
 const getUsers = () => exec(`SELECT * FROM users;`)
 
-app.get('/getUsers/', (req, res, next) => {
+router.get('/users/', (req, res, next) => {
   getUsers()
     .then(users => res.json(users))
     .catch(next)
@@ -165,10 +151,37 @@ app.get('/getUsers/', (req, res, next) => {
 // récupération des abonnés
 const getSuscribers = () => exec(`SELECT * FROM subscribers;`)
 
-app.get('/getSuscribers/', (req, res, next) => {
+router.get('/suscribers/', (req, res, next) => {
   getSuscribers()
     .then(subscribers => res.json(subscribers))
     .catch(next)
 })
 
-module.exports = app
+router.post('/signup', (req, res, next) => {
+  console.log(req.body)
+  if (req.body.username === 'coco' && req.body.password === 'channel') {
+    user = { username: req.body.username }
+    const tokenUserinfo = { username: user.username, status: 'PouletMaster' }// status: recup via la bdd
+    const token = jwt.sign(tokenUserinfo, jwtSecret)
+    res.header('Access-Control-Expose-Headers', 'x-access-token')
+    res.set('x-access-token', token)
+    res.status(200).send({ details: 'user connected', user })
+  }
+})
+
+router.post('/protected', (req, res, next) => {
+  const token = getToken(req)
+  const objectTests = { // data appelée par la bdd
+    test: 'ok'
+  }
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      console.log(err)
+      return res.status(200).send({mess: 'pas accès aux données'})
+    }
+    console.log('decode', decoded)
+    return res.status(200).send({mess: 'Données utilisateur', objectTests })
+  })
+})
+
+module.exports = router

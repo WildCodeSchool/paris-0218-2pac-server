@@ -8,4 +8,36 @@ const connection = mysql.createConnection({
   namedPlaceholders: true
 })
 
-module.exports = connection
+const exec = async (query, params) => {
+  const connect = await connection
+  const result = await connect.execute(query, params)
+
+  return result[0]
+}
+
+const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
+
+const newArticle = article => exec(`
+    INSERT INTO articles
+      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+    VALUES
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription)`,
+  article)
+
+
+// récupération des documents
+const getDocuments = () => exec(`SELECT * FROM  documents;`)
+
+const newDocument = document => exec(`
+  INSERT INTO documents
+    (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+  VALUES
+    (:typeId, :title, :shortDescription, :url, :isMemberOnly, :isResource, :isArchived)`,
+  document)
+
+module.exports = {
+  getArticles,
+  newArticle,
+  getDocuments,
+  newDocument,
+}
