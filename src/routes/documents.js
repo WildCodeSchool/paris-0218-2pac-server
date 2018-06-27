@@ -54,7 +54,6 @@ router.post('/documents', upload.single('document'), (req, res, next) => {
 router.delete('/documents/:id', (req, res, next) => {
   const documentId = req.params.id
 
-
   db.deleteDocument(documentId)
     .then(() => res.json('ok'))
     .catch(next)

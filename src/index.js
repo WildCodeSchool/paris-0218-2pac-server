@@ -29,7 +29,6 @@ app.use((req, res, next) => {
   next()
 })
 
-
 app.get('/', (req, res) => {
   res.send('Vous êtes connecté au serveur ;-)')
 })
@@ -47,4 +46,3 @@ app.listen(1107, () => {
 })
 
 module.exports = app
-
