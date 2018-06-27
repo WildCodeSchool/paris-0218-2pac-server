@@ -34,14 +34,14 @@ router.get('/documents', (req, res, next) => {
 })
 
 // création d'un document
-router.post('/documents', upload.single("document"), (req, res, next) => {
-  // console.log(req.file)
-  // console.log(req.body)
+router.post('/documents', upload.single('document'), (req, res, next) => {
+  // console.log(filename)
+  console.log(req.body)
   const file = req.file
 
   const doc = {
     ...req.body,
-    url: file.filename //+ path.extname(file.originalname)
+    url: file.filename // + path.extname(file.originalname)
   }
 
   db.newDocument(doc)
@@ -51,33 +51,25 @@ router.post('/documents', upload.single("document"), (req, res, next) => {
 
 // supression d'un document
 
-// const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
+router.delete('/documents/:id', (req, res, next) => {
+  const documentId = req.params.id
 
-// router.delete('/documents/:id', (req, res, next) => {
-//   deleteDocument()
-//     .then(documents => res.json(documents))
-//     .catch(next)
-// })
+
+  db.deleteDocument(documentId)
+    .then(() => res.json('ok'))
+    .catch(next)
+})
 
 // mise à jour d'un document
 
-// router.put('/documents/:id', (req, res, next) => {
-//   exec(`
-//     UPDATE documents
-//     SET
-//       typeId=:typeId,
-//       title=:title,
-//       shortDescription=:shortDescription,
-//       url=:url,
-//       isMemberOnly=:isMemberOnly,
-//       isResource=:isResource,
-//       isArchived=:isArchived
-//     WHERE id=:id`, {
-//     ...req.body,
-//     id: req.params.id
-//   })
-//     .then(res => res.status(200).json('oki'))
-//     .catch(next)
-// })
+router.put('/documents/:id', (req, res, next) => {
+  const docId = req.params.id
+  const updates = req.body
+  console.log(req.body)
+
+  db.updateDocument(docId, updates)
+    .then(() => res.json('ok'))
+    .catch(next)
+})
 
 module.exports = router

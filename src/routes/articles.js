@@ -9,7 +9,11 @@ router.get('/articles/', (req, res, next) => {
     .then(articles => res.json(articles))
     .catch(next)
 })
-
+router.get('/articlesCat/', (req, res, next) => {
+  db.getArticlesCat()
+    .then(articleCategories => res.json(articleCategories))
+    .catch(next)
+})
 
 // création d'un article
 router.post('/articles', (req, res, next) => {
@@ -25,14 +29,10 @@ router.post('/articles', (req, res, next) => {
 
 router.delete('/articles/:id', (req, res, next) => {
   const articleId = req.params.id
-  console.log(articleId)
 
   db.deleteArticle(articleId)
     .then(() => res.json('ok'))
     .catch(next)
 })
-
-
-
 
 module.exports = router
