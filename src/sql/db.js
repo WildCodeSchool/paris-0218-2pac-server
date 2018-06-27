@@ -15,7 +15,8 @@ const exec = async (query, params) => {
   return result[0]
 }
 
-const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
+const getArticles = () => exec(`SELECT * FROM articles;`)
+//const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
 
 const newArticle = article => exec(`
     INSERT INTO articles
@@ -23,6 +24,8 @@ const newArticle = article => exec(`
     VALUES
       (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription)`,
   article)
+
+const deleteArticle = (id) => exec(`DELETE FROM articles WHERE id=?`, [ id ])
 
 
 // récupération des documents
@@ -40,4 +43,5 @@ module.exports = {
   newArticle,
   getDocuments,
   newDocument,
+  deleteArticle,
 }

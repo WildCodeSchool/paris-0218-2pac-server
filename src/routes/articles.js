@@ -14,10 +14,25 @@ router.get('/articles/', (req, res, next) => {
 // création d'un article
 router.post('/articles', (req, res, next) => {
   const article = req.body
+  console.log(req.body)
 
   db.newArticle(article)
     .then(result => res.json('oki'))
     .catch(next)
 })
+
+// suppression d'un article
+
+router.delete('/articles/:id', (req, res, next) => {
+  const articleId = req.params.id
+  console.log(articleId)
+
+  db.deleteArticle(articleId)
+    .then(() => res.json('ok'))
+    .catch(next)
+})
+
+
+
 
 module.exports = router
