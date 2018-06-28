@@ -33,6 +33,14 @@ router.get('/documents', (req, res, next) => {
     .catch(next)
 })
 
+
+router.get('/documentsCat/', (req, res, next) => {
+  db.getDocumentsCat()
+    .then(documentCategories => res.json(documentCategories))
+    .catch(next)
+})
+
+
 // création d'un document
 router.post('/documents', upload.single('document'), (req, res, next) => {
   // console.log(filename)

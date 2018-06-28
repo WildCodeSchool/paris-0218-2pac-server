@@ -53,6 +53,9 @@ const updateArticle = params => exec(`
 // récupération des documents
 const getDocuments = () => exec(`SELECT * FROM  documents;`)
 
+//récupération de la catégorie de documents
+const getDocumentsCat = () => exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.id;`)
+
 // création d'un document
 const newDocument = doc => exec(`
   INSERT INTO documents
@@ -87,5 +90,6 @@ module.exports = {
   deleteDocument,
   // updateDocument
   updateArticle,
-  getArticlesCat
+  getArticlesCat,
+  getDocumentsCat
 }

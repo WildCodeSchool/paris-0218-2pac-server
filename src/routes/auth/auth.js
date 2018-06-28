@@ -46,7 +46,7 @@ router.put('/articles/:id', (req, res, next) => {
 })
 
 // suppression des données des articles de la BDD
-const deleteArticle = id => exec(`DELETE FROM articles WHERE id=:id`, [ id ])
+const deleteArticle = id => exec(`DELETE FROM articles WHERE id=:req.params.id`, [ id ])
 
 router.delete('/articles/:id', (req, res, next) => {
   deleteArticle()
@@ -125,63 +125,63 @@ router.get('/getArticleCategories/', (req, res, next) => {
     .catch(next)
 })
 
-// AUTHENTIFICATION
+// // AUTHENTIFICATION
 
-const getToken = req => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.split(' ')[0] === 'Bearer'
-  ) {
-    return req.headers.authorization.split(' ')[1]
-  } else if (req.query && req.query.token) {
-    return req.query.token
-  }
-  return null
-}
+// const getToken = req => {
+//   if (
+//     req.headers.authorization &&
+//     req.headers.authorization.split(' ')[0] === 'Bearer'
+//   ) {
+//     return req.headers.authorization.split(' ')[1]
+//   } else if (req.query && req.query.token) {
+//     return req.query.token
+//   }
+//   return null
+// }
 
-// récupération des utilisateurs
-const getUsers = () => exec(`SELECT * FROM users;`)
+// // récupération des utilisateurs
+// const getUsers = () => exec(`SELECT * FROM users;`)
 
-router.get('/users/', (req, res, next) => {
-  getUsers()
-    .then(users => res.json(users))
-    .catch(next)
-})
+// router.get('/users/', (req, res, next) => {
+//   getUsers()
+//     .then(users => res.json(users))
+//     .catch(next)
+// })
 
-// récupération des abonnés
-const getSuscribers = () => exec(`SELECT * FROM subscribers;`)
+// // récupération des abonnés
+// const getSuscribers = () => exec(`SELECT * FROM subscribers;`)
 
-router.get('/suscribers/', (req, res, next) => {
-  getSuscribers()
-    .then(subscribers => res.json(subscribers))
-    .catch(next)
-})
+// router.get('/suscribers/', (req, res, next) => {
+//   getSuscribers()
+//     .then(subscribers => res.json(subscribers))
+//     .catch(next)
+// })
 
-router.post('/signup', (req, res, next) => {
-  console.log(req.body)
-  if (req.body.username === 'coco' && req.body.password === 'channel') {
-    user = { username: req.body.username }
-    const tokenUserinfo = { username: user.username, status: 'PouletMaster' }// status: recup via la bdd
-    const token = jwt.sign(tokenUserinfo, jwtSecret)
-    res.header('Access-Control-Expose-Headers', 'x-access-token')
-    res.set('x-access-token', token)
-    res.status(200).send({ details: 'user connected', user })
-  }
-})
+// router.post('/signup', (req, res, next) => {
+//   console.log(req.body)
+//   if (req.body.username === 'coco' && req.body.password === 'channel') {
+//     user = { username: req.body.username }
+//     const tokenUserinfo = { username: user.username, status: 'PouletMaster' }// status: recup via la bdd
+//     const token = jwt.sign(tokenUserinfo, jwtSecret)
+//     res.header('Access-Control-Expose-Headers', 'x-access-token')
+//     res.set('x-access-token', token)
+//     res.status(200).send({ details: 'user connected', user })
+//   }
+// })
 
-router.post('/protected', (req, res, next) => {
-  const token = getToken(req)
-  const objectTests = { // data appelée par la bdd
-    test: 'ok'
-  }
-  jwt.verify(token, jwtSecret, (err, decoded) => {
-    if (err) {
-      console.log(err)
-      return res.status(200).send({mess: 'pas accès aux données'})
-    }
-    console.log('decode', decoded)
-    return res.status(200).send({mess: 'Données utilisateur', objectTests })
-  })
-})
+// router.post('/protected', (req, res, next) => {
+//   const token = getToken(req)
+//   const objectTests = { // data appelée par la bdd
+//     test: 'ok'
+//   }
+//   jwt.verify(token, jwtSecret, (err, decoded) => {
+//     if (err) {
+//       console.log(err)
+//       return res.status(200).send({mess: 'pas accès aux données'})
+//     }
+//     console.log('decode', decoded)
+//     return res.status(200).send({mess: 'Données utilisateur', objectTests })
+//   })
+// })
 
 module.exports = router

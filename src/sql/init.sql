@@ -22,10 +22,10 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(50)  
 );
 
-INSERT INTO articles_categories (name) VALUES ("actualité");
-INSERT INTO articles_categories (name) VALUES ("évènement"); 
-INSERT INTO articles_categories (name) VALUES ("presse");
-INSERT INTO articles_categories (name) VALUES ("communiqués de presse");
+INSERT INTO articles_categories (name) VALUES ("Actualité");
+INSERT INTO articles_categories (name) VALUES ("Evénement"); 
+INSERT INTO articles_categories (name) VALUES ("Presse");
+INSERT INTO articles_categories (name) VALUES ("Communiqués de presse");
 
 CREATE TABLE articles
 (
@@ -50,11 +50,11 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(50)  
 );
 
-INSERT INTO documents_types (name) VALUES ("textes politiques");
-INSERT INTO documents_types (name) VALUES ("documents de position des organisations membres");
-INSERT INTO documents_types (name) VALUES ("documents réservés aux membres");
-INSERT INTO documents_types (name) VALUES ("travaux de recherche");
-INSERT INTO documents_types (name) VALUES ("autres documents de position"); 
+INSERT INTO documents_types (name) VALUES ("Textes politiques");
+INSERT INTO documents_types (name) VALUES ("Documents de position des organisations membres");
+INSERT INTO documents_types (name) VALUES ("Documents réservés aux membres");
+INSERT INTO documents_types (name) VALUES ("Travaux de recherche");
+INSERT INTO documents_types (name) VALUES ("Autres documents de position"); 
 
 
 CREATE TABLE documents
