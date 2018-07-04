@@ -49,8 +49,19 @@ const updateArticle = params => exec(`
   params.id
 ])
 
+const prepareDocument = doc => ({
+  ...doc,
+  isMemberOnly: Boolean(doc.isMemberOnly),
+  isResource: Boolean(doc.isResource),
+  isArchived: Boolean(doc.isArchived),
+})
+
 // récupération des documents
-const getDocuments = () => exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.id;`)
+const getDocuments = async () => {
+  const documents = await exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.typeId;`)
+
+  return documents.map(prepareDocument)
+}
 
 // création d'un document
 const newDocument = doc => exec(`

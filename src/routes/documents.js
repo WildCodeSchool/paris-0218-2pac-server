@@ -38,9 +38,20 @@ router.get('/documents', (req, res, next) => {
 router.post('/documents', upload.single('document'), (req, res, next) => {
   const file = req.file
 
+  if (!file) {
+    return next(Error('missing document'))
+  }
+
+  const body = req.body
+
   const doc = {
-    ...req.body,
-    url: file.filename // + path.extname(file.originalname)
+    typeId: Number(body.typeId),
+    title: body.title,
+    shortDescription: body.shortDescription,
+    isMemberOnly: Boolean(body.isMemberOnly),
+    isResource: Boolean(body.isResource),
+    isArchived: false,
+    url: file.filename, // + path.extname(file.originalname)
   }
 
   db.newDocument(doc)
