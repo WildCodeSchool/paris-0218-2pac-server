@@ -2,9 +2,6 @@ DROP DATABASE IF EXISTS pac;
 CREATE DATABASE pac;
 USE pac;
 
-CREATE USER IF NOT EXISTS 'pacpac'@'localhost';
-GRANT ALL PRIVILEGES ON pac.* To 'pacpac'@'localhost' IDENTIFIED BY 'mysql';
-
 -- TODOS:
 -- - tags table
 -- - pinnedArticles table
@@ -15,10 +12,9 @@ GRANT ALL PRIVILEGES ON pac.* To 'pacpac'@'localhost' IDENTIFIED BY 'mysql';
 -- name VARCHAR(50)
 -- )
 
-
 CREATE TABLE articles_categories
 (
-id INT PRIMARY KEY AUTO_INCREMENT,
+categoryId INT PRIMARY KEY AUTO_INCREMENT,
 category VARCHAR(50)
 );
 
@@ -40,14 +36,14 @@ categoryId INT NOT NULL,
 imageURL VARCHAR(2083),
 imageDescription TEXT,
 FOREIGN KEY (categoryId)
-  REFERENCES articles_categories(id)
+  REFERENCES articles_categories(categoryId)
   ON DELETE CASCADE
 );
 -- TODO: FOREIGN keys (O:M resources; O:M tags)
 
 CREATE TABLE documents_types
 (
-id INT PRIMARY KEY AUTO_INCREMENT,
+typeId INT PRIMARY KEY AUTO_INCREMENT,
 type VARCHAR(50)
 );
 
@@ -69,7 +65,7 @@ isMemberOnly BOOLEAN,
 isResource BOOLEAN,
 isArchived BOOLEAN,
 FOREIGN KEY (typeId)
-  REFERENCES documents_types(id)
+  REFERENCES documents_types(typeId)
   ON DELETE CASCADE
 );
 -- TODO: FOREIGN keys (O:M tags)

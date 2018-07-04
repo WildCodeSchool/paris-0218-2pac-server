@@ -16,7 +16,7 @@ const exec = (query, params) => {
 
 const exec1 = (query, params) => first(exec(`${query} LIMIT 1`, params))
 
-const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
+const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`)
 
 const newArticle = article => exec(`
     INSERT INTO articles
