@@ -6,6 +6,7 @@ const documentsRouter = require('./routes/documents.js')
 const bodyParser = require('body-parser')
 
 const app = express()
+const port = 5000
 
 // MIDDLEWARES
 
@@ -41,8 +42,8 @@ app.use(function (req, res, next) {
   next(err)
 })
 
-app.listen(1107, () => {
-  console.log('listening on port 1107')
+app.listen(port, () => {
+  console.log(`listening on port: ${port}`)
 })
 
 module.exports = app
