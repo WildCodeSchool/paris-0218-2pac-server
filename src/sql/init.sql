@@ -19,16 +19,17 @@ GRANT ALL PRIVILEGES ON pac.* To 'server'@'localhost' IDENTIFIED BY 'mysql';
 CREATE TABLE articles_categories
 (
 id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(50)  
+category VARCHAR(50)
 );
 
-INSERT INTO articles_categories (name) VALUES ("Actualité");
-INSERT INTO articles_categories (name) VALUES ("Evénement"); 
-INSERT INTO articles_categories (name) VALUES ("Presse");
-INSERT INTO articles_categories (name) VALUES ("Communiqués de presse");
+INSERT INTO articles_categories (category) VALUES ("Actualité");
+INSERT INTO articles_categories (category) VALUES ("Evénement");
+INSERT INTO articles_categories (category) VALUES ("Presse");
+INSERT INTO articles_categories (category) VALUES ("Communiqués de presse");
 
 CREATE TABLE articles
 (
+
 id INT PRIMARY KEY AUTO_INCREMENT,
 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 title VARCHAR(90),
@@ -47,15 +48,14 @@ FOREIGN KEY (categoryId)
 CREATE TABLE documents_types
 (
 id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(50)  
+type VARCHAR(50)
 );
 
-INSERT INTO documents_types (name) VALUES ("Textes politiques");
-INSERT INTO documents_types (name) VALUES ("Documents de position des organisations membres");
-INSERT INTO documents_types (name) VALUES ("Documents réservés aux membres");
-INSERT INTO documents_types (name) VALUES ("Travaux de recherche");
-INSERT INTO documents_types (name) VALUES ("Autres documents de position"); 
-
+INSERT INTO documents_types (type) VALUES ("Textes politiques");
+INSERT INTO documents_types (type) VALUES ("Documents de position des organisations membres");
+INSERT INTO documents_types (type) VALUES ("Documents réservés aux membres");
+INSERT INTO documents_types (type) VALUES ("Travaux de recherche");
+INSERT INTO documents_types (type) VALUES ("Autres documents de position");
 
 CREATE TABLE documents
 (

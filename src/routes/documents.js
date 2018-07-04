@@ -6,7 +6,8 @@ const router = express.Router()
 const db = require('../sql/db.js')
 
 const publicDocumentsPath = path.join(__dirname, '../../public/documents')
-console.log({publicDocumentsPath})
+console.log({ publicDocumentsPath })
+
 const storage = multer.diskStorage({
   destination: publicDocumentsPath,
   filename: (req, file, cb) => {
@@ -33,18 +34,8 @@ router.get('/documents', (req, res, next) => {
     .catch(next)
 })
 
-
-router.get('/documentsCat/', (req, res, next) => {
-  db.getDocumentsCat()
-    .then(documentCategories => res.json(documentCategories))
-    .catch(next)
-})
-
-
 // création d'un document
 router.post('/documents', upload.single('document'), (req, res, next) => {
-  // console.log(filename)
-  console.log(req.body)
   const file = req.file
 
   const doc = {
@@ -58,7 +49,6 @@ router.post('/documents', upload.single('document'), (req, res, next) => {
 })
 
 // supression d'un document
-
 router.delete('/documents/:id', (req, res, next) => {
   const documentId = req.params.id
 
@@ -68,11 +58,9 @@ router.delete('/documents/:id', (req, res, next) => {
 })
 
 // mise à jour d'un document
-
 router.put('/documents/:id', (req, res, next) => {
   const docId = req.params.id
   const updates = req.body
-  console.log(req.body)
 
   db.updateDocument(docId, updates)
     .then(() => res.json('ok'))

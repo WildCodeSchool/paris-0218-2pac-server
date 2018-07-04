@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise')
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Victoria01',
+  password: '',
   database: 'pac',
   namedPlaceholders: true
 })
@@ -15,9 +15,7 @@ const exec = async (query, params) => {
   return result[0]
 }
 
-const getArticles = () => exec(`SELECT * FROM articles;`)
-
-const getArticlesCat = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
+const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
 
 const newArticle = article => exec(`
     INSERT INTO articles
@@ -51,10 +49,7 @@ const updateArticle = params => exec(`
 ])
 
 // récupération des documents
-const getDocuments = () => exec(`SELECT * FROM  documents;`)
-
-//récupération de la catégorie de documents
-const getDocumentsCat = () => exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.id;`)
+const getDocuments = () => exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.id;`)
 
 // création d'un document
 const newDocument = doc => exec(`
@@ -84,12 +79,10 @@ const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 module.exports = {
   getArticles,
   newArticle,
+  updateArticle,
+  deleteArticle,
   getDocuments,
   newDocument,
-  deleteArticle,
+  // updateDocument,
   deleteDocument,
-  // updateDocument
-  updateArticle,
-  getArticlesCat,
-  getDocumentsCat
 }
