@@ -3,7 +3,7 @@ const path = require('path')
 const multer = require('multer')
 const router = express.Router()
 
-const db = require('../sql/db.js')
+const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
 const publicDocumentsPath = path.join(__dirname, '../../public/documents')
 console.log({ publicDocumentsPath })
@@ -44,7 +44,7 @@ router.post('/documents', upload.single('document'), (req, res, next) => {
   }
 
   db.newDocument(doc)
-    .then(result => res.json('ok'))
+    .then(() => res.json('ok'))
     .catch(next)
 })
 

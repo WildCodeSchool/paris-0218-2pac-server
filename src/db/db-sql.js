@@ -1,19 +1,20 @@
 const mysql = require('mysql2/promise')
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'pac',
-  namedPlaceholders: true
-})
+const defaultUrl = 'mysql://root@localhost/pac'
 
-const exec = async (query, params) => {
-  const connect = await connection
-  const result = await connect.execute(query, params)
-
-  return result[0]
+if (!process.env.DATABASE_URL) {
+  console.warn(`'DATABASE_URL' environment variable is not set! -> fallback to default mysql default url: '${defaultUrl}'`)
 }
+const url = process.env.DATABASE_URL || defaultUrl
+const pool = mysql.createPool(`${url}?waitForConnections=true&connectionLimit=10&queueLimit=0&namedPlaceholders=true`) // namedPlaceholders: true
+
+const first = async q => (await q)[0]
+const exec = (query, params) => {
+  // console.log('SQL - ', { query, params })
+  return first(pool.execute(query, params))
+}
+
+const exec1 = (query, params) => first(exec(`${query} LIMIT 1`, params))
 
 const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.id;`)
 

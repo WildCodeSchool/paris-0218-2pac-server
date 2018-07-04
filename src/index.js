@@ -1,17 +1,18 @@
 const express = require('express')
 const path = require('path')
-// const authRouter = require('./routes/auth/auth.js')
 const articlesRouter = require('./routes/articles.js')
 const documentsRouter = require('./routes/documents.js')
 const bodyParser = require('body-parser')
 
-const app = express()
 const port = 5000
+
+const app = express()
 
 // MIDDLEWARES
 
 const mediasFolderPath = path.join(__dirname, '../public')
-console.log({mediasFolderPath})
+console.log({ mediasFolderPath })
+
 app.use('/medias', express.static(mediasFolderPath))
 
 app.use(bodyParser.json())

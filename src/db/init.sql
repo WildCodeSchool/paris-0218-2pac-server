@@ -2,8 +2,8 @@ DROP DATABASE IF EXISTS pac;
 CREATE DATABASE pac;
 USE pac;
 
-CREATE USER IF NOT EXISTS 'server'@'localhost';
-GRANT ALL PRIVILEGES ON pac.* To 'server'@'localhost' IDENTIFIED BY 'mysql';
+CREATE USER IF NOT EXISTS 'pacpac'@'localhost';
+GRANT ALL PRIVILEGES ON pac.* To 'pacpac'@'localhost' IDENTIFIED BY 'mysql';
 
 -- TODOS:
 -- - tags table
