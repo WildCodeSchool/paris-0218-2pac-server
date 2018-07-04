@@ -1,5 +1,5 @@
-const articles = require('../mocks/articles.json')
-const documents = require('../mocks/documents.json')
+const articles = require('../../mocks/articles.json')
+const documents = require('../../mocks/documents.json')
 
 module.exports = {
   getArticles: () => Promise.resolve(articles),

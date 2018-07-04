@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src --ignore public",
-    "mocks": "MOCKS=true npm start",
+    "mocks": "cp -r mocks/documents public && MOCKS=true npm start",
     "lint": "standard | snazzy",
     "lint:fix": "standard --fix",
     "test": "echo 'no test specified'"
