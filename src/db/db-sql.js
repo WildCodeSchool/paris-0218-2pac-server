@@ -53,7 +53,7 @@ const prepareDocument = doc => ({
   ...doc,
   isMemberOnly: Boolean(doc.isMemberOnly),
   isResource: Boolean(doc.isResource),
-  isArchived: Boolean(doc.isArchived),
+  isArchived: Boolean(doc.isArchived)
 })
 
 // récupération des documents
@@ -88,6 +88,15 @@ const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 //     WHERE id=?`, [ params.typeId, params.title, params.shortDescription, params.url, params.isMemberOnly,
 //     params.isResource, params.isArchived, params.id])
 
+// récupération des subscribers
+const getSubscribers = () => exec(`SELECT * FROM subscribers;`)
+
+// ajout de subscriber à la bdd
+const newSubscriber = subscriber => exec(`INSERT INTO subscribers
+(reuseableInfo, firstName, lastName, phoneNumber, email)
+VALUES
+(:reuseableInfo, :firstName, :lastName, :phoneNumber, :email);`, subscriber)
+
 module.exports = {
   getArticles,
   newArticle,
@@ -97,4 +106,6 @@ module.exports = {
   newDocument,
   // updateDocument,
   deleteDocument,
+  getSubscribers,
+  newSubscriber
 }
