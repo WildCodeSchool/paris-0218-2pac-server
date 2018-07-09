@@ -24,6 +24,7 @@
   "homepage": "https://github.com/WildCodeSchool/paris-0218-2pac-server#readme",
   "dependencies": {
     "@reach/router": "github:reach/router",
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
