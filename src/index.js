@@ -45,6 +45,16 @@ app.use(function (req, res, next) {
   next(err)
 })
 
+// Errors handling
+app.use((err, req, res, next) => {
+  if (err) {
+    res.json({ error: err.message })
+    return console.error(err)
+  }
+
+  next()
+})
+
 app.listen(port, () => {
   console.log(`listening on port: ${port}`)
 })
