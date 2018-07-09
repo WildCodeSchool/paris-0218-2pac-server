@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const usersRouter = require('./routes/users.js')
 const articlesRouter = require('./routes/articles.js')
 const documentsRouter = require('./routes/documents.js')
 const subscribersRouter = require('./routes/subscribers.js')
@@ -36,7 +37,7 @@ app.get('/', (req, res) => {
   res.send('Vous êtes connecté au serveur ;-)')
 })
 
-app.use('/', articlesRouter, documentsRouter, subscribersRouter)
+app.use('/', usersRouter, articlesRouter, documentsRouter, subscribersRouter)
 
 app.use(function (req, res, next) {
   const err = new Error('Not Found')

@@ -16,6 +16,18 @@ const exec = (query, params) => {
 
 const exec1 = (query, params) => first(exec(`${query} LIMIT 1`, params))
 
+// USERS
+
+const getUsers = () => exec(`SELECT * FROM users;`)
+
+const newUser = user => exec(`INSERT INTO users (username, password, isAdmin)
+  VALUES (:username, :password, :isAdmin)`, user)
+
+const deleteUser = (id) => exec(`DELETE FROM users WHERE id=?`, [ id ])
+
+
+// ARTICLES
+
 const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`)
 
 const newArticle = article => exec(`
@@ -98,6 +110,9 @@ VALUES
 (:reuseableInfo, :firstName, :lastName, :phoneNumber, :email);`, subscriber)
 
 module.exports = {
+  getUsers,
+  newUser,
+  deleteUser,
   getArticles,
   newArticle,
   updateArticle,
