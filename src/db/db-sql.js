@@ -19,8 +19,8 @@ const exec1 = (query, params) => first(exec(`${query} LIMIT 1`, params))
 // USERS
 
 const getUsers = () => exec(`SELECT * FROM users;`)
-getUsers.byId = id => exec1(`SELECT * FROM users WHERE id=? LIMIT 1`, [ id ])
-getUsers.byUsername = username => exec1(`SELECT * FROM users WHERE username=? LIMIT 1`, [ username ])
+getUsers.byId = id => exec1(`SELECT * FROM users WHERE id=?`, [ id ])
+getUsers.byUsername = username => exec1(`SELECT * FROM users WHERE username=?`, [ username ])
 
 const newUser = user => exec(`INSERT INTO users (username, password, isAdmin)
   VALUES (:username, :password, :isAdmin)`, user)
