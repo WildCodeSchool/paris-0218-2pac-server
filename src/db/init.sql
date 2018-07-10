@@ -18,20 +18,19 @@ categoryId INT PRIMARY KEY AUTO_INCREMENT,
 category VARCHAR(50)
 );
 
+INSERT INTO articles_categories (category) VALUES ("Article");
+INSERT INTO articles_categories (category) VALUES ("Presse");
 INSERT INTO articles_categories (category) VALUES ("Actualité");
 INSERT INTO articles_categories (category) VALUES ("Evénement");
-INSERT INTO articles_categories (category) VALUES ("Presse");
-INSERT INTO articles_categories (category) VALUES ("Communiqués de presse");
 
 CREATE TABLE articles
 (
-
 id INT PRIMARY KEY AUTO_INCREMENT,
 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 title VARCHAR(90),
 shortDescription TEXT,
 description TEXT,
-eventDate DATETIME,
+eventDate TEXT,
 categoryId INT NOT NULL,
 imageURL VARCHAR(2083),
 imageDescription TEXT,
