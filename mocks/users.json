@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": 1,
+    "createdAt": "2018-07-10T08:11:56.000Z",
+    "isAdmin": true,
+    "username": "admin"
+  },
+  {
+    "id": 2,
+    "createdAt": "2018-07-10T08:11:56.000Z",
+    "isAdmin": false,
+    "username": "member"
+  }
+]
