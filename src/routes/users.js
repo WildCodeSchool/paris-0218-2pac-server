@@ -12,7 +12,7 @@ const prepareUser = user => ({
 })
 const prepareUsers = users => users.map(prepareUser)
 
-router.get('/users', (req, res, next) => {
+router.get('/users', authRequired.asAdmin, (req, res, next) => {
   db.getUsers()
     .then(prepareUsers)
     .then(users => res.json(users))
@@ -33,7 +33,7 @@ router.post('/users', authRequired.asAdmin, async (req, res, next) => {
     .catch(next)
 })
 
-router.delete('/users/:id', (req, res, next) => {
+router.delete('/users/:id', authRequired.asAdmin, (req, res, next) => {
   const userId = req.params.id
 
   db.deleteUser(userId)
