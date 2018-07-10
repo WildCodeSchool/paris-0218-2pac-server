@@ -8,6 +8,7 @@ const documentsRouter = require('./routes/documents.js')
 const subscribersRouter = require('./routes/subscribers.js')
 const bodyParser = require('body-parser')
 const db = require(process.env.MOCKS ? './db/db-mocks.js' : './db/db-sql.js')
+const { authRequired } = require('./middlewares.js')
 
 const jwtSecret = 'SECRET' // todo: process.env.JWT_SECRET
 
@@ -40,7 +41,7 @@ app.use((req, res, next) => {
 })
 
 // Authentication (with JWT) middleware
-app.use(async (req, res, next) => {
+app.use((req, res, next) => {
   const { authorization } = req.headers
 
   if (!authorization) { return next() }
@@ -64,6 +65,10 @@ app.get('/', (req, res) => {
   res.send('Vous êtes connecté au serveur ;-)')
 })
 
+app.get('/whoami', (req, res, next) => {
+  res.json({ user: req.user })
+})
+
 app.post('/signin', async (req, res, next) => {
   const { username, password } = req.body
 
@@ -73,9 +78,11 @@ app.post('/signin', async (req, res, next) => {
 
   if (!(await bcrypt.compare(password, user.password))) { return next(Error('Wrong password')) }
 
-  const token = jwt.sign({ id: user.id, username: user.username, isAdmin: user.isAdmin }, jwtSecret)
+  const userSignature = { id: user.id, username: user.username, isAdmin: user.isAdmin }
 
-  res.json({ token })
+  const token = jwt.sign(userSignature, jwtSecret)
+
+  res.json({ user: userSignature, token })
 })
 
 app.use('/', usersRouter, articlesRouter, documentsRouter, subscribersRouter)
