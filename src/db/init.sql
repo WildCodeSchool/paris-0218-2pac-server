@@ -91,6 +91,8 @@ password VARCHAR(100) NOT NULL
 
 -- ADMIN ACCOUNT
 INSERT INTO users (username, password, isAdmin) VALUES ("admin", "$2b$10$Iae4rGF5t4Fm.RPVDDabSuZNzWg97q5sqXEl/aoP4JiVpIufwBhVu", 1);
+-- MEMBER ACCOUNT
+INSERT INTO users (username, password, isAdmin) VALUES ("member", "$2b$10$OHIeQ/eY1UvjzRDVDtofmOBl5l9Sq6ix8hW2mnOgl1vcMCnCt9.gq", 0);
 
 CREATE TABLE subscribers
 (
