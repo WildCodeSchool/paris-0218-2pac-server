@@ -89,6 +89,9 @@ username VARCHAR(30) NOT NULL UNIQUE,
 password VARCHAR(100) NOT NULL
 );
 
+-- ADMIN ACCOUNT
+INSERT INTO users (username, password, isAdmin) VALUES ("admin", "$2b$10$Iae4rGF5t4Fm.RPVDDabSuZNzWg97q5sqXEl/aoP4JiVpIufwBhVu", 1);
+
 CREATE TABLE subscribers
 (
 id INT PRIMARY KEY AUTO_INCREMENT,
