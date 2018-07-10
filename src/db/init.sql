@@ -84,10 +84,15 @@ CREATE TABLE users
 (
 id INT PRIMARY KEY AUTO_INCREMENT,
 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-isAdmin BOOLEAN,
-username VARCHAR(30) NOT NULL,
-password VARCHAR(30) NOT NULL
+isAdmin BOOLEAN DEFAULT 0,
+username VARCHAR(30) NOT NULL UNIQUE,
+password VARCHAR(100) NOT NULL
 );
+
+-- ADMIN ACCOUNT
+INSERT INTO users (username, password, isAdmin) VALUES ("admin", "$2b$10$Iae4rGF5t4Fm.RPVDDabSuZNzWg97q5sqXEl/aoP4JiVpIufwBhVu", 1);
+-- MEMBER ACCOUNT
+INSERT INTO users (username, password, isAdmin) VALUES ("member", "$2b$10$OHIeQ/eY1UvjzRDVDtofmOBl5l9Sq6ix8hW2mnOgl1vcMCnCt9.gq", 0);
 
 CREATE TABLE subscribers
 (
@@ -98,4 +103,4 @@ firstName VARCHAR(90) NOT NULL,
 lastName VARCHAR(90) NOT NULL,
 phoneNumber INT(10) NOT NULL,
 email VARCHAR(90) NOT NULL
-) 
+)
