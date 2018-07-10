@@ -4,17 +4,12 @@ const router = express.Router()
 const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 const { authRequired } = require('../middlewares.js')
 
-const prepareUser = user => ({
-  id: user.id,
-  createdAt: user.createdAt,
-  username: user.username,
-  isAdmin: Boolean(user.isAdmin)
-})
-const prepareUsers = users => users.map(prepareUser)
+const hideUserPassword = ({ password, ...user }) => user
+const hideUsersPasswords = users => users.map(hideUserPassword)
 
 router.get('/users', authRequired.asAdmin, (req, res, next) => {
   db.getUsers()
-    .then(prepareUsers)
+    .then(hideUsersPasswords)
     .then(users => res.json(users))
     .catch(next)
 })

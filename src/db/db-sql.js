@@ -18,9 +18,15 @@ const exec1 = (query, params) => first(exec(`${query} LIMIT 1`, params))
 
 // USERS
 
-const getUsers = () => exec(`SELECT * FROM users;`)
-getUsers.byId = id => exec1(`SELECT * FROM users WHERE id=?`, [ id ])
-getUsers.byUsername = username => exec1(`SELECT * FROM users WHERE username=?`, [ username ])
+const prepareUser = user => ({
+  ...user,
+  isAdmin: Boolean(user.isAdmin)
+})
+const prepareUsers = users => users.map(prepareUser)
+
+const getUsers = () => exec(`SELECT * FROM users;`).then(prepareUsers)
+getUsers.byId = id => exec1(`SELECT * FROM users WHERE id=?`, [ id ]).then(prepareUser)
+getUsers.byUsername = username => exec1(`SELECT * FROM users WHERE username=?`, [ username ]).then(prepareUser)
 
 const newUser = user => exec(`INSERT INTO users (username, password, isAdmin)
   VALUES (:username, :password, :isAdmin)`, user)
