@@ -2,6 +2,7 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const router = express.Router()
 const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
+const { authRequired } = require('../middlewares.js')
 
 const prepareUser = user => ({
   id: user.id,
@@ -18,7 +19,7 @@ router.get('/users', (req, res, next) => {
     .catch(next)
 })
 
-router.post('/users', async (req, res, next) => {
+router.post('/users', authRequired.asAdmin, async (req, res, next) => {
   const saltRounds = 10
   const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
 
