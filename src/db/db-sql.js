@@ -95,18 +95,26 @@ doc)
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
 // //mise à jour d'un document
-// const updateDocument = params => exec(`
-//     UPDATE documents
-//     SET
-//       typeId=?,
-//       title=?,
-//       shortDescription=?,
-//       url=?,
-//       isMemberOnly=?,
-//       isResource=?,
-//       isArchived=?
-//     WHERE id=?`, [ params.typeId, params.title, params.shortDescription, params.url, params.isMemberOnly,
-//     params.isResource, params.isArchived, params.id])
+ const updateDocument = params => exec(`
+     UPDATE documents
+     SET
+       typeId=?,
+       title=?,
+       shortDescription=?,
+       url=?,
+       isMemberOnly=?,
+       isResource=?,
+       isArchived=?
+     WHERE id=?`, [
+     params.typeId,
+     params.title,
+     params.shortDescription,
+     params.url,
+     params.isMemberOnly,
+     params.isResource,
+     params.isArchived,
+     params.id
+     ])
 
 // récupération des subscribers
 const getSubscribers = () => exec(`SELECT * FROM subscribers;`)
@@ -127,7 +135,7 @@ module.exports = {
   deleteArticle,
   getDocuments,
   newDocument,
-  // updateDocument,
+  updateDocument,
   deleteDocument,
   getSubscribers,
   newSubscriber
