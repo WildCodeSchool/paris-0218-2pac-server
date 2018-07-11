@@ -1,5 +1,7 @@
 USE pac;
 
+-- ARTICLES
+
 INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
@@ -64,4 +66,101 @@ VALUES (
 3,
 "https://images.unsplash.com/photo-1506073881649-4e23be3e9ed0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=575ab31da5060592c7e9797d1f269f35&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
 "Logo pour une autre PAC"
+);
+
+
+-- DOCUMENTS
+
+INSERT INTO documents (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+VALUES (
+"5",
+"Comité des Régions",
+"\r\nCréé en 1994 à la suite de la signature du traité de Maastricht, le Comité européen des régions est l’assemblée des 350 élus locaux et régionaux issus de l’ensemble des 28 États membres de l’UE, représentant plus de 507 millions d’Européens. Sa mission consiste à associer les collectivités régionales et locales et les populations qu’elles représentent au processus décisionnel de l’UE et à les informer au sujet des politiques de l’Union. La Commission européenne, le Parlement européen et le Conseil sont tenus de consulter le Comité dans les domaines de décision politique concernant les régions et les villes. Le Comité des régions peut également saisir la Cour de justice de l’Union européenne en cas de violation de ses droits ou bien s’il estime qu’un texte de loi de l’UE viole le principe de subsidiarité ou ne respecte pas les compétences des collectivités régionales et locales.",
+"Comité des Régions.pdf",
+1,
+1,
+0
+);
+
+INSERT INTO documents (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+VALUES (
+"1",
+"Farm Europe",
+"GLOBAL FOOD FORUM\r\nA common vision\r\nA new ambition",
+"Farm Europe.pdf",
+1,
+1,
+0
+);
+
+INSERT INTO documents (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+VALUES (
+"1",
+"Fondation RISE",
+"CAP: Thinking Out of the Box Further modernisation of the CAP – why, what and how?",
+"Fondation RISE.pdf",
+1,
+1,
+0
+);
+
+INSERT INTO documents (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+VALUES (
+"3",
+"JRC",
+"SCENAR 2030\r\nPATHWAYS FOR THE EUROPEAN AGRICULTURE AND FOOD SECTOR BEYOND 2020\r\n                   SUMMARY REPORT",
+"JRC.pdf",
+1,
+1,
+0
+);
+
+INSERT INTO documents (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+VALUES (
+"3",
+"Momagri",
+"Livre Blanc\r\nUn nouveau cap stratégique pour la PAC",
+"Momagri.pdf",
+1,
+1,
+0
+);
+
+
+-- SUBSCRIBERS
+
+INSERT INTO subscribers (reuseableInfo, firstName, lastName, phoneNumber, email)
+VALUES (
+1,
+"Bob",
+"Morane",
+"0601020304",
+"bob.morane@gmail.com"
+);
+
+INSERT INTO subscribers (reuseableInfo, firstName, lastName, phoneNumber, email)
+VALUES (
+1,
+"Alfonse",
+"Brown",
+"0601020304",
+"al.fonce@gmail.com"
+);
+
+INSERT INTO subscribers (reuseableInfo, firstName, lastName, phoneNumber, email)
+VALUES (
+1,
+"Fanfan",
+"La Tulipe",
+"0601020304",
+"fflt@gmail.com"
+);
+
+INSERT INTO subscribers (reuseableInfo, firstName, lastName, phoneNumber, email)
+VALUES (
+0,
+"Marc",
+"Abou",
+"0601020304",
+"marc.abou@gmail.com"
 );

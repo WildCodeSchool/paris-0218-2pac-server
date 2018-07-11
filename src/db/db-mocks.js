@@ -12,5 +12,5 @@ module.exports = {
   deleteArticle: () => Promise.resolve(),
   getDocuments: () => Promise.resolve(documents),
   newDocument: () => Promise.resolve(),
-  deleteDocument: () => Promise.resolve(),
+  deleteDocument: () => Promise.resolve()
 }

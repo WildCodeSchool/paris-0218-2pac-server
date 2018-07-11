@@ -33,7 +33,6 @@ const newUser = user => exec(`INSERT INTO users (username, password, isAdmin)
 
 const deleteUser = (id) => exec(`DELETE FROM users WHERE id=?`, [ id ])
 
-
 // ARTICLES
 
 const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`)

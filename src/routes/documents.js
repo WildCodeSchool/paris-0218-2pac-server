@@ -51,7 +51,7 @@ router.post('/documents', upload.single('document'), (req, res, next) => {
     isMemberOnly: Boolean(body.isMemberOnly),
     isResource: Boolean(body.isResource),
     isArchived: false,
-    url: file.filename, // + path.extname(file.originalname)
+    url: file.filename // + path.extname(file.originalname)
   }
 
   db.newDocument(doc)
