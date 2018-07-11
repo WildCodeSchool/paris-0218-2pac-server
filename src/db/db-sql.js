@@ -39,9 +39,9 @@ const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_catego
 
 const newArticle = article => exec(`
     INSERT INTO articles
-      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
     VALUES
-      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription)`,
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription; :isMemberOnly)`,
 article)
 
 const deleteArticle = (id) => exec(`DELETE FROM articles WHERE id=?`, [ id ])
@@ -57,6 +57,7 @@ const updateArticle = params => exec(`
       categoryId=?,
       imageURL=?,
       imageDescription=?
+      isMemberOnly=?
     WHERE id=?`, [
   params.title,
   params.shortDescription,
@@ -65,6 +66,7 @@ const updateArticle = params => exec(`
   params.categoryId,
   params.imageURL,
   params.imageDescription,
+  params.isMemberOnly,
   params.id
 ])
 
