@@ -5,7 +5,11 @@ const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
 // récupération des articles
 router.get('/articles', (req, res, next) => {
+  const isMember = req.user !== undefined
+  const isPublic = article => !article.isMemberOnly
+
   db.getArticles()
+    .then(articles => isMember ? articles : articles.filter(isPublic))
     .then(articles => res.json(articles))
     .catch(next)
 })

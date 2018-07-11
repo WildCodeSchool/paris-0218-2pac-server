@@ -29,7 +29,11 @@ const upload = multer({
 })
 
 router.get('/documents', (req, res, next) => {
+  const isMember = req.user !== undefined
+  const isPublic = doc => !doc.isMemberOnly
+
   db.getDocuments()
+    .then(documents => isMember ? documents : documents.filter(isPublic))
     .then(documents => res.json(documents))
     .catch(next)
 })
