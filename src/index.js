@@ -8,7 +8,6 @@ const documentsRouter = require('./routes/documents.js')
 const subscribersRouter = require('./routes/subscribers.js')
 const bodyParser = require('body-parser')
 const db = require(process.env.MOCKS ? './db/db-mocks.js' : './db/db-sql.js')
-const { authRequired } = require('./middlewares.js')
 
 const jwtSecret = 'SECRET' // todo: process.env.JWT_SECRET
 

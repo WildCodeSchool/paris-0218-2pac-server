@@ -19,5 +19,5 @@ authRequired.asAdmin = (req, res, next) => {
 }
 
 module.exports = {
-  authRequired,
+  authRequired
 }
