@@ -2,7 +2,7 @@ USE pac;
 
 -- ARTICLES
 
-INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
 "Réforme de la Politique Agricole Commune",
@@ -10,10 +10,11 @@ VALUES (
 "",
 2,
 "https://images.unsplash.com/photo-1512907858294-736ec4aa4bba?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=039feedd14b9ddf2ec161dd984d575c2&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
-"Logo pour une autre PAC"
+"Logo pour une autre PAC",
+1
 );
 
-INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
 "Réforme de la Politique Agricole Commune",
@@ -21,10 +22,11 @@ VALUES (
 "",
 3,
 "https://images.unsplash.com/photo-1425934398893-310a009a77f9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=330381a5d64e86a159fb2abb5ec3da10&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
-"Logo pour une autre PAC"
+"Logo pour une autre PAC",
+1
 );
 
-INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
 "Réforme de la Politique Agricole Commune",
@@ -32,10 +34,11 @@ VALUES (
 "2018-11-17",
 4,
 "https://images.unsplash.com/photo-1520238861346-a49993df0e69?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f8247a715bd04208a03ba0244e26f2ad&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
-"Logo pour une autre PAC"
+"Logo pour une autre PAC",
+1
 );
 
-INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
 "Réforme de la Politique Agricole Commune",
@@ -43,10 +46,11 @@ VALUES (
 "",
 1,
 "https://images.unsplash.com/photo-1452948491233-ad8a1ed01085?ixlib=rb-0.3.5&s=60917646c61704d0b5c3b6ff7203fab8&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
-"Logo pour une autre PAC"
+"Logo pour une autre PAC",
+0
 );
 
-INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
 "Réforme de la Politique Agricole Commune",
@@ -54,10 +58,11 @@ VALUES (
 "2018-11-23",
 4,
 "https://images.unsplash.com/photo-1508900589175-96fb81667349?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3cb35cc9d9fac6359259b383b6374f1d&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
-"Logo pour une autre PAC"
+"Logo pour une autre PAC",
+0
 );
 
-INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+INSERT INTO articles (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
 VALUES (
 "La plateforme pour une autre pac se remobilise",
 "Réforme de la Politique Agricole Commune",
@@ -65,7 +70,8 @@ VALUES (
 "",
 3,
 "https://images.unsplash.com/photo-1506073881649-4e23be3e9ed0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=575ab31da5060592c7e9797d1f269f35&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb",
-"Logo pour une autre PAC"
+"Logo pour une autre PAC",
+0
 );
 
 

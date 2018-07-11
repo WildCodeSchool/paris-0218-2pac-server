@@ -35,13 +35,19 @@ const deleteUser = (id) => exec(`DELETE FROM users WHERE id=?`, [ id ])
 
 // ARTICLES
 
-const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`)
+const prepareArticle = article => ({
+  ...article,
+  isMemberOnly: Boolean(article.isMemberOnly)
+})
+const prepareArticles = articles => articles.map(prepareArticle)
+
+const getArticles = async () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`).then(prepareArticles)
 
 const newArticle = article => exec(`
     INSERT INTO articles
       (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
     VALUES
-      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription; :isMemberOnly)`,
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
 article)
 
 const deleteArticle = (id) => exec(`DELETE FROM articles WHERE id=?`, [ id ])
