@@ -34,6 +34,7 @@ eventDate TEXT,
 categoryId INT NOT NULL,
 imageURL VARCHAR(2083),
 imageDescription TEXT,
+isMemberOnly BOOLEAN,
 FOREIGN KEY (categoryId)
   REFERENCES articles_categories(categoryId)
   ON DELETE CASCADE

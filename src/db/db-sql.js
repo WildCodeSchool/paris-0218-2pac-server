@@ -35,13 +35,19 @@ const deleteUser = (id) => exec(`DELETE FROM users WHERE id=?`, [ id ])
 
 // ARTICLES
 
-const getArticles = () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`)
+const prepareArticle = article => ({
+  ...article,
+  isMemberOnly: Boolean(article.isMemberOnly)
+})
+const prepareArticles = articles => articles.map(prepareArticle)
+
+const getArticles = async () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`).then(prepareArticles)
 
 const newArticle = article => exec(`
     INSERT INTO articles
-      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription)
+      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
     VALUES
-      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription)`,
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
 article)
 
 const deleteArticle = (id) => exec(`DELETE FROM articles WHERE id=?`, [ id ])
@@ -57,6 +63,7 @@ const updateArticle = params => exec(`
       categoryId=?,
       imageURL=?,
       imageDescription=?
+      isMemberOnly=?
     WHERE id=?`, [
   params.title,
   params.shortDescription,
@@ -65,6 +72,7 @@ const updateArticle = params => exec(`
   params.categoryId,
   params.imageURL,
   params.imageDescription,
+  params.isMemberOnly,
   params.id
 ])
 
@@ -94,18 +102,26 @@ doc)
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
 // //mise à jour d'un document
-// const updateDocument = params => exec(`
-//     UPDATE documents
-//     SET
-//       typeId=?,
-//       title=?,
-//       shortDescription=?,
-//       url=?,
-//       isMemberOnly=?,
-//       isResource=?,
-//       isArchived=?
-//     WHERE id=?`, [ params.typeId, params.title, params.shortDescription, params.url, params.isMemberOnly,
-//     params.isResource, params.isArchived, params.id])
+ const updateDocument = params => exec(`
+     UPDATE documents
+     SET
+       typeId=?,
+       title=?,
+       shortDescription=?,
+       url=?,
+       isMemberOnly=?,
+       isResource=?,
+       isArchived=?
+     WHERE id=?`, [
+     params.typeId,
+     params.title,
+     params.shortDescription,
+     params.url,
+     params.isMemberOnly,
+     params.isResource,
+     params.isArchived,
+     params.id
+     ])
 
 // récupération des subscribers
 const getSubscribers = () => exec(`SELECT * FROM subscribers;`)
@@ -126,7 +142,7 @@ module.exports = {
   deleteArticle,
   getDocuments,
   newDocument,
-  // updateDocument,
+  updateDocument,
   deleteDocument,
   getSubscribers,
   newSubscriber
