@@ -9,7 +9,7 @@ const subscribersRouter = require('./routes/subscribers.js')
 const bodyParser = require('body-parser')
 const db = require(process.env.MOCKS ? './db/db-mocks.js' : './db/db-sql.js')
 
-const jwtSecret = 'SECRET' // todo: process.env.JWT_SECRET
+const jwtSecret = process.env.JWT_SECRET || console.info('missing JWT_SECRET env variable') || 'SECRET'
 
 const port = 5000
 
