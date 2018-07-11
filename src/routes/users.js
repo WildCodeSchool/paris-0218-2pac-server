@@ -1,8 +1,8 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
 const router = express.Router()
-const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 const { authRequired } = require('../middlewares.js')
+const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
 const hideUserPassword = ({ password, ...user }) => user
 const hideUsersPasswords = users => users.map(hideUserPassword)

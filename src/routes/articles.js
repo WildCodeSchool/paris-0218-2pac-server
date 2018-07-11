@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { authRequired } = require('../middlewares.js')
 const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
 // récupération des articles
@@ -10,7 +11,7 @@ router.get('/articles', (req, res, next) => {
 })
 
 // création d'un article
-router.post('/articles', (req, res, next) => {
+router.post('/articles', authRequired.asAdmin, (req, res, next) => {
   const article = req.body
 
   db.newArticle(article)
@@ -19,7 +20,7 @@ router.post('/articles', (req, res, next) => {
 })
 
 // suppression d'un article
-router.delete('/articles/:id', (req, res, next) => {
+router.delete('/articles/:id', authRequired.asAdmin, (req, res, next) => {
   const articleId = req.params.id
 
   db.deleteArticle(articleId)

@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const multer = require('multer')
 const router = express.Router()
-
+const { authRequired } = require('../middlewares.js')
 const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
 const publicDocumentsPath = path.join(__dirname, '../../public/documents')
@@ -35,7 +35,7 @@ router.get('/documents', (req, res, next) => {
 })
 
 // création d'un document
-router.post('/documents', upload.single('document'), (req, res, next) => {
+router.post('/documents', authRequired.asAdmin, upload.single('document'), (req, res, next) => {
   const file = req.file
 
   if (!file) {
@@ -60,7 +60,7 @@ router.post('/documents', upload.single('document'), (req, res, next) => {
 })
 
 // supression d'un document
-router.delete('/documents/:id', (req, res, next) => {
+router.delete('/documents/:id', authRequired.asAdmin, (req, res, next) => {
   const documentId = req.params.id
 
   db.deleteDocument(documentId)
