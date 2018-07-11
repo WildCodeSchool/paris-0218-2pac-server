@@ -77,7 +77,7 @@ VALUES (
 "Comité des Régions",
 "\r\nCréé en 1994 à la suite de la signature du traité de Maastricht, le Comité européen des régions est l’assemblée des 350 élus locaux et régionaux issus de l’ensemble des 28 États membres de l’UE, représentant plus de 507 millions d’Européens. Sa mission consiste à associer les collectivités régionales et locales et les populations qu’elles représentent au processus décisionnel de l’UE et à les informer au sujet des politiques de l’Union. La Commission européenne, le Parlement européen et le Conseil sont tenus de consulter le Comité dans les domaines de décision politique concernant les régions et les villes. Le Comité des régions peut également saisir la Cour de justice de l’Union européenne en cas de violation de ses droits ou bien s’il estime qu’un texte de loi de l’UE viole le principe de subsidiarité ou ne respecte pas les compétences des collectivités régionales et locales.",
 "Comité des Régions.pdf",
-1,
+0,
 1,
 0
 );
@@ -88,7 +88,7 @@ VALUES (
 "Farm Europe",
 "GLOBAL FOOD FORUM\r\nA common vision\r\nA new ambition",
 "Farm Europe.pdf",
-1,
+0,
 1,
 0
 );
@@ -99,7 +99,7 @@ VALUES (
 "Fondation RISE",
 "CAP: Thinking Out of the Box Further modernisation of the CAP – why, what and how?",
 "Fondation RISE.pdf",
-1,
+0,
 1,
 0
 );
