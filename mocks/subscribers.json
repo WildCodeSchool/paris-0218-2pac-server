@@ -2,7 +2,7 @@
     {
         "id": 1,
         "createdAt": "2018-07-11T19:34:26.000Z",
-        "reuseableInfo": 1,
+        "reuseableInfo": true,
         "firstName": "Bob",
         "lastName": "Morane",
         "phoneNumber": "0601020304",
@@ -11,7 +11,7 @@
     {
         "id": 2,
         "createdAt": "2018-07-11T19:34:26.000Z",
-        "reuseableInfo": 1,
+        "reuseableInfo": true,
         "firstName": "Alfonse",
         "lastName": "Brown",
         "phoneNumber": "0601020304",
@@ -20,7 +20,7 @@
     {
         "id": 3,
         "createdAt": "2018-07-11T19:34:26.000Z",
-        "reuseableInfo": 1,
+        "reuseableInfo": true,
         "firstName": "Fanfan",
         "lastName": "La Tulipe",
         "phoneNumber": "0601020304",
@@ -29,7 +29,7 @@
     {
         "id": 4,
         "createdAt": "2018-07-11T19:34:26.000Z",
-        "reuseableInfo": 0,
+        "reuseableInfo": false,
         "firstName": "Marc",
         "lastName": "Abou",
         "phoneNumber": "0601020304",
