@@ -69,15 +69,6 @@ FOREIGN KEY (typeId)
 );
 -- TODO: FOREIGN keys (O:M tags)
 
-CREATE TABLE events
-(
-id INT PRIMARY KEY AUTO_INCREMENT,
-createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-eventDate DATETIME,
-title VARCHAR(90),
-shortDescription TEXT,
-description TEXT
-);
 
 CREATE TABLE users
 (
