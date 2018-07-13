@@ -31,7 +31,7 @@ getUsers.byUsername = username => exec1(`SELECT * FROM users WHERE username=?`, 
 const newUser = user => exec(`INSERT INTO users (username, password, isAdmin)
   VALUES (:username, :password, :isAdmin)`, user)
 
-const deleteUser = (id) => exec(`DELETE FROM users WHERE id=?`, [ id ])
+const deleteUser = id => exec(`DELETE FROM users WHERE id=?`, [ id ])
 
 // ARTICLES
 
@@ -50,31 +50,21 @@ const newArticle = article => exec(`
       (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
 article)
 
-const deleteArticle = (id) => exec(`DELETE FROM articles WHERE id=?`, [ id ])
+const deleteArticle = id => exec(`DELETE FROM articles WHERE id=?`, [ id ])
 
 // mise à jour d'un article
-const updateArticle = params => exec(`
+const updateArticle = article => exec(`
     UPDATE articles
     SET
-      title=?,
-      shortDescription=?,
-      description=?,
-      eventDate=?,
-      categoryId=?,
-      imageURL=?,
-      imageDescription=?
-      isMemberOnly=?
-    WHERE id=?`, [
-  params.title,
-  params.shortDescription,
-  params.description,
-  params.eventDate,
-  params.categoryId,
-  params.imageURL,
-  params.imageDescription,
-  params.isMemberOnly,
-  params.id
-])
+      title=:title,
+      shortDescription=:shortDescription,
+      description=:description,
+      eventDate=:eventDate,
+      categoryId=:categoryId,
+      imageURL=:imageURL,
+      imageDescription=:imageDescription,
+      isMemberOnly=:isMemberOnly
+    WHERE id=:id`, article)
 
 const prepareDocument = doc => ({
   ...doc,
@@ -102,7 +92,7 @@ doc)
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
 // //mise à jour d'un document
- const updateDocument = params => exec(`
+const updateDocument = params => exec(`
      UPDATE documents
      SET
        typeId=?,
@@ -113,15 +103,15 @@ const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
        isResource=?,
        isArchived=?
      WHERE id=?`, [
-     params.typeId,
-     params.title,
-     params.shortDescription,
-     params.url,
-     params.isMemberOnly,
-     params.isResource,
-     params.isArchived,
-     params.id
-     ])
+  params.typeId,
+  params.title,
+  params.shortDescription,
+  params.url,
+  params.isMemberOnly,
+  params.isResource,
+  params.isArchived,
+  params.id
+])
 
 // récupération des subscribers
 const getSubscribers = () => exec(`SELECT * FROM subscribers;`)
