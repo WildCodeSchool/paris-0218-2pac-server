@@ -3,7 +3,6 @@ const router = express.Router()
 const { authRequired } = require('../middlewares.js')
 const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
-// récupération des articles
 router.get('/articles', (req, res, next) => {
   const isMember = req.user !== undefined
   const isPublic = article => !article.isMemberOnly
@@ -14,7 +13,6 @@ router.get('/articles', (req, res, next) => {
     .catch(next)
 })
 
-// création d'un article
 router.post('/articles', authRequired.asAdmin, (req, res, next) => {
   const article = req.body
 
@@ -23,7 +21,15 @@ router.post('/articles', authRequired.asAdmin, (req, res, next) => {
     .catch(next)
 })
 
-// suppression d'un article
+router.put('/articles/:id', authRequired.asAdmin, (req, res, next) => {
+  const article = req.body
+  article.id = Number(req.params.id) || article.id
+
+  db.updateArticle(article)
+    .then(() => res.json('ok'))
+    .catch(next)
+})
+
 router.delete('/articles/:id', authRequired.asAdmin, (req, res, next) => {
   const articleId = req.params.id
 
