@@ -16,7 +16,7 @@ router.get('/subscribers', authRequired.asAdmin, (req, res, next) => {
     .catch(next)
 })
 
-router.post('/subscribers', authRequired.asAdmin, (req, res, next) => {
+router.post('/subscribers', (req, res, next) => {
   const subscriber = req.body
   console.log(subscriber)
   db.newSubscriber(subscriber)
