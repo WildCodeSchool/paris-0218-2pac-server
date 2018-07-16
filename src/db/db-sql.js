@@ -10,7 +10,7 @@ const pool = mysql.createPool(`${url}?waitForConnections=true&connectionLimit=10
 
 const first = async q => (await q)[0]
 const exec = (query, params) => {
-  // console.log('SQL - ', { query, params })
+  console.log('SQL - ', { query, params })
   return first(pool.execute(query, params))
 }
 
@@ -44,27 +44,27 @@ const prepareArticles = articles => articles.map(prepareArticle)
 const getArticles = async () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`).then(prepareArticles)
 
 const newArticle = article => exec(`
-    INSERT INTO articles
-      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
-    VALUES
-      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
+  INSERT INTO articles
+    (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
+  VALUES
+    (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
 article)
 
 const deleteArticle = id => exec(`DELETE FROM articles WHERE id=?`, [ id ])
 
 // mise à jour d'un article
 const updateArticle = article => exec(`
-    UPDATE articles
-    SET
-      title=:title,
-      shortDescription=:shortDescription,
-      description=:description,
-      eventDate=:eventDate,
-      categoryId=:categoryId,
-      imageURL=:imageURL,
-      imageDescription=:imageDescription,
-      isMemberOnly=:isMemberOnly
-    WHERE id=:id`, article)
+  UPDATE articles
+  SET
+    title=:title,
+    shortDescription=:shortDescription,
+    description=:description,
+    eventDate=:eventDate,
+    categoryId=:categoryId,
+    imageURL=:imageURL,
+    imageDescription=:imageDescription,
+    isMemberOnly=:isMemberOnly
+  WHERE id=:id`, article)
 
 const prepareDocument = doc => ({
   ...doc,
@@ -72,13 +72,13 @@ const prepareDocument = doc => ({
   isResource: Boolean(doc.isResource),
   isArchived: Boolean(doc.isArchived)
 })
+const prepareDocuments = documents => documents.map(prepareDocument)
 
 // récupération des documents
-const getDocuments = async () => {
-  const documents = await exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.typeId;`)
+const getDocuments = () => exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.typeId;`)
+  .then(prepareDocuments)
 
-  return documents.map(prepareDocument)
-}
+getDocuments.byId = id => exec1(`SELECT * FROM documents WHERE id=?`, [ id ])
 
 // création d'un document
 const newDocument = doc => exec(`
@@ -92,26 +92,11 @@ doc)
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
 // //mise à jour d'un document
-const updateDocument = params => exec(`
-     UPDATE documents
-     SET
-       typeId=?,
-       title=?,
-       shortDescription=?,
-       url=?,
-       isMemberOnly=?,
-       isResource=?,
-       isArchived=?
-     WHERE id=?`, [
-  params.typeId,
-  params.title,
-  params.shortDescription,
-  params.url,
-  params.isMemberOnly,
-  params.isResource,
-  params.isArchived,
-  params.id
-])
+
+const sqlKeys = o => Object.keys(o).map(key => `${key}=:${key}`).join(',')
+
+const updateDocument = (id, updates) => exec(`
+  UPDATE documents SET ${sqlKeys(updates)} WHERE id=${id}`, updates)
 
 // récupération des subscribers
 const getSubscribers = () => exec(`SELECT * FROM subscribers;`)
@@ -121,6 +106,8 @@ const newSubscriber = subscriber => exec(`INSERT INTO subscribers
 (reuseableInfo, firstName, lastName, phoneNumber, email)
 VALUES
 (:reuseableInfo, :firstName, :lastName, :phoneNumber, :email);`, subscriber)
+
+const deleteSubscriber = id => exec(`DELETE FROM subscribers WHERE id=?`, [ id ])
 
 module.exports = {
   getUsers,
@@ -135,5 +122,6 @@ module.exports = {
   updateDocument,
   deleteDocument,
   getSubscribers,
-  newSubscriber
+  newSubscriber,
+  deleteSubscriber
 }

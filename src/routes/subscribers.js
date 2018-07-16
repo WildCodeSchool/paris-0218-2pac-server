@@ -18,8 +18,16 @@ router.get('/subscribers', authRequired.asAdmin, (req, res, next) => {
 
 router.post('/subscribers', (req, res, next) => {
   const subscriber = req.body
-  console.log(subscriber)
+
   db.newSubscriber(subscriber)
+    .then(result => res.json('ok'))
+    .catch(next)
+})
+
+router.delete('/subscribers/:id', (req, res, next) => {
+  const subscriberId = req.params.id
+
+  db.deleteSubscriber(subscriberId)
     .then(result => res.json('ok'))
     .catch(next)
 })
