@@ -29,11 +29,19 @@ const upload = multer({
 })
 
 router.get('/documents', (req, res, next) => {
-  const isMember = req.user !== undefined
-  const isPublic = doc => !doc.isMemberOnly
+  const isMember = req.user && !req.user.isAdmin
+  const isAdmin = req.user && req.user.isAdmin
+  const isDocumentPublic = doc => !doc.isMemberOnly
+  const isDocumentNotArchived = doc => !doc.isArchived
 
   db.getDocuments()
-    .then(documents => isMember ? documents : documents.filter(isPublic))
+    .then(documents => {
+      if (isAdmin) { return documents }
+
+      const notArchivedDocuments = documents.filter(isDocumentNotArchived)
+
+      return isMember ? notArchivedDocuments : notArchivedDocuments.filter(isDocumentPublic)
+    })
     .then(documents => res.json(documents))
     .catch(next)
 })
