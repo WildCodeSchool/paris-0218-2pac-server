@@ -2,11 +2,11 @@ const express = require('express')
 const path = require('path')
 const multer = require('multer')
 const router = express.Router()
+const { formData } = require('../utils.js')
 const { authRequired } = require('../middlewares.js')
 const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
 
 const publicDocumentsPath = path.join(__dirname, '../../public/documents')
-console.log({ publicDocumentsPath })
 
 const storage = multer.diskStorage({
   destination: publicDocumentsPath,
@@ -46,7 +46,6 @@ router.get('/documents', (req, res, next) => {
     .catch(next)
 })
 
-// création d'un document
 router.post('/documents', authRequired.asAdmin, upload.single('document'), (req, res, next) => {
   const file = req.file
 
@@ -58,11 +57,11 @@ router.post('/documents', authRequired.asAdmin, upload.single('document'), (req,
 
   const doc = {
     typeId: Number(body.typeId),
-    title: body.title,
-    shortDescription: body.shortDescription,
-    isMemberOnly: Boolean(body.isMemberOnly),
-    isResource: Boolean(body.isResource),
-    isArchived: false,
+    title: body.title || '',
+    shortDescription: body.shortDescription || '',
+    isMemberOnly: formData.Boolean(body.isMemberOnly) || false,
+    isResource: formData.Boolean(body.isResource) || false,
+    isArchived: formData.Boolean(body.isArchived) || false,
     url: file.filename // + path.extname(file.originalname)
   }
 
@@ -71,21 +70,33 @@ router.post('/documents', authRequired.asAdmin, upload.single('document'), (req,
     .catch(next)
 })
 
-// supression d'un document
-router.delete('/documents/:id', authRequired.asAdmin, (req, res, next) => {
-  const documentId = req.params.id
+router.put('/documents/:id', authRequired.asAdmin, upload.single('document'), (req, res, next) => {
+  const doc = req.body
 
-  db.deleteDocument(documentId)
+  const docId = Number(req.params.id) || doc.id
+
+  const updates = {
+    typeId: Number(doc.typeId),
+    title: doc.title || '',
+    shortDescription: doc.shortDescription || '',
+    isMemberOnly: formData.Boolean(doc.isMemberOnly) || false,
+    isResource: formData.Boolean(doc.isResource) || false,
+    isArchived: formData.Boolean(doc.isArchived) || false
+  }
+
+  if (req.file) {
+    updates.url = req.file.filename
+  }
+
+  db.updateDocument(docId, updates)
     .then(() => res.json('ok'))
     .catch(next)
 })
 
-// mise à jour d'un document
-router.put('/documents/:id', (req, res, next) => {
-  const docId = req.params.id
-  const updates = req.body
+router.delete('/documents/:id', authRequired.asAdmin, (req, res, next) => {
+  const documentId = req.params.id
 
-  db.updateDocument(docId, updates)
+  db.deleteDocument(documentId)
     .then(() => res.json('ok'))
     .catch(next)
 })
