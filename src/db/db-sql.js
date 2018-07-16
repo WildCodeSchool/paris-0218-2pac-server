@@ -8,6 +8,10 @@ if (!process.env.DATABASE_URL) {
 const url = process.env.DATABASE_URL || defaultUrl
 const pool = mysql.createPool(`${url}?waitForConnections=true&connectionLimit=10&queueLimit=0&namedPlaceholders=true`) // namedPlaceholders: true
 
+// Utils
+
+const sqlKeysPlaceholders = o => Object.keys(o).map(key => `${key}=:${key}`).join(',')
+
 const first = async q => (await q)[0]
 const exec = (query, params) => {
   console.log('SQL - ', { query, params })
@@ -42,6 +46,7 @@ const prepareArticle = article => ({
 const prepareArticles = articles => articles.map(prepareArticle)
 
 const getArticles = async () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`).then(prepareArticles)
+getArticles.byId = id => exec1(`SELECT * FROM articles WHERE id=?`, [ id ]).then(prepareArticle)
 
 const newArticle = article => exec(`
   INSERT INTO articles
@@ -50,9 +55,6 @@ const newArticle = article => exec(`
     (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
 article)
 
-const deleteArticle = id => exec(`DELETE FROM articles WHERE id=?`, [ id ])
-
-// mise à jour d'un article
 const updateArticle = article => exec(`
   UPDATE articles
   SET
@@ -66,6 +68,10 @@ const updateArticle = article => exec(`
     isMemberOnly=:isMemberOnly
   WHERE id=:id`, article)
 
+const deleteArticle = id => exec(`DELETE FROM articles WHERE id=?`, [ id ])
+
+// DOCUMENTS
+
 const prepareDocument = doc => ({
   ...doc,
   isMemberOnly: Boolean(doc.isMemberOnly),
@@ -74,13 +80,11 @@ const prepareDocument = doc => ({
 })
 const prepareDocuments = documents => documents.map(prepareDocument)
 
-// récupération des documents
 const getDocuments = () => exec(`SELECT * FROM documents LEFT JOIN documents_types on documents.typeId = documents_types.typeId;`)
   .then(prepareDocuments)
 
-getDocuments.byId = id => exec1(`SELECT * FROM documents WHERE id=?`, [ id ])
+getDocuments.byId = id => exec1(`SELECT * FROM documents WHERE id=?`, [ id ]).then(prepareDocument)
 
-// création d'un document
 const newDocument = doc => exec(`
   INSERT INTO documents
     (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
@@ -88,20 +92,22 @@ const newDocument = doc => exec(`
     (:typeId, :title, :shortDescription, :url, :isMemberOnly, :isResource, :isArchived)`,
 doc)
 
-// suppression d'un document
+const updateDocument = (id, updates) => exec(`
+  UPDATE documents SET ${sqlKeysPlaceholders(updates)} WHERE id=${id}`, updates)
+
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
-// //mise à jour d'un document
+// SUBSRIBERS
 
-const sqlKeys = o => Object.keys(o).map(key => `${key}=:${key}`).join(',')
+const prepareSubscriber = subscriber => ({
+  ...subscriber,
+  reuseableInfo: Boolean(subscriber.reuseableInfo)
+})
+const prepareSubscribers = subscribers => subscribers.map(prepareSubscriber)
 
-const updateDocument = (id, updates) => exec(`
-  UPDATE documents SET ${sqlKeys(updates)} WHERE id=${id}`, updates)
+const getSubscribers = () => exec(`SELECT * FROM subscribers;`).then(prepareSubscribers)
+getSubscribers.byId = id => exec1(`SELECT * FROM subscribers WHERE id=?`, [ id ]).then(prepareSubscriber)
 
-// récupération des subscribers
-const getSubscribers = () => exec(`SELECT * FROM subscribers;`)
-
-// ajout de subscriber à la bdd
 const newSubscriber = subscriber => exec(`INSERT INTO subscribers
 (reuseableInfo, firstName, lastName, phoneNumber, email)
 VALUES
