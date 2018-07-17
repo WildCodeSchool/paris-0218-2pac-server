@@ -48,25 +48,36 @@ const prepareArticles = articles => articles.map(prepareArticle)
 const getArticles = async () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`).then(prepareArticles)
 getArticles.byId = id => exec1(`SELECT * FROM articles WHERE id=?`, [ id ]).then(prepareArticle)
 
-const newArticle = article => exec(`
-  INSERT INTO articles
-    (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly)
-  VALUES
-    (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly)`,
-article)
+const cleanTags = tags => tags.split(",").map(tag => tag.trim()).join(',')
 
-const updateArticle = article => exec(`
-  UPDATE articles
-  SET
-    title=:title,
-    shortDescription=:shortDescription,
-    description=:description,
-    eventDate=:eventDate,
-    categoryId=:categoryId,
-    imageURL=:imageURL,
-    imageDescription=:imageDescription,
-    isMemberOnly=:isMemberOnly
-  WHERE id=:id`, article)
+const newArticle = article => {
+  article.tags = cleanTags(article.tags)
+
+  return exec(`
+    INSERT INTO articles
+      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly, tags)
+    VALUES
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly, :tags)`,
+    article)
+}
+
+const updateArticle = article => {
+  article.tags = cleanTags(article.tags)
+
+  return exec(`
+    UPDATE articles
+    SET
+      title=:title,
+      shortDescription=:shortDescription,
+      description=:description,
+      eventDate=:eventDate,
+      categoryId=:categoryId,
+      imageURL=:imageURL,
+      imageDescription=:imageDescription,
+      isMemberOnly=:isMemberOnly,
+      tags=:tags
+    WHERE id=:id`, article)
+}
 
 const deleteArticle = id => exec(`DELETE FROM articles WHERE id=?`, [ id ])
 

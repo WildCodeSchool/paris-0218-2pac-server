@@ -35,6 +35,7 @@ categoryId INT NOT NULL,
 imageURL VARCHAR(2083),
 imageDescription TEXT,
 isMemberOnly BOOLEAN,
+tags TEXT,
 FOREIGN KEY (categoryId)
   REFERENCES articles_categories(categoryId)
   ON DELETE CASCADE
