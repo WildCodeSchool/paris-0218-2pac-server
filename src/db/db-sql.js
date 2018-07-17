@@ -97,7 +97,7 @@ const updateDocument = (id, updates) => exec(`
 
 const deleteDocument = id => exec(`DELETE FROM documents WHERE id=?`, [ id ])
 
-// SUBSRIBERS
+// SUBSCRIBERS
 
 const prepareSubscriber = subscriber => ({
   ...subscriber,
