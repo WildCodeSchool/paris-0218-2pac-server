@@ -48,7 +48,7 @@ const prepareArticles = articles => articles.map(prepareArticle)
 const getArticles = async () => exec(`SELECT * FROM articles LEFT JOIN articles_categories on articles.categoryId = articles_categories.categoryId;`).then(prepareArticles)
 getArticles.byId = id => exec1(`SELECT * FROM articles WHERE id=?`, [ id ]).then(prepareArticle)
 
-const cleanTags = tags => tags.split(",").map(tag => tag.trim()).join(',')
+const cleanTags = tags => tags.split(',').map(tag => tag.trim()).join(',')
 
 const newArticle = article => {
   article.tags = cleanTags(article.tags)
@@ -58,7 +58,7 @@ const newArticle = article => {
       (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly, tags)
     VALUES
       (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly, :tags)`,
-    article)
+  article)
 }
 
 const updateArticle = article => {
