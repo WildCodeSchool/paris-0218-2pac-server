@@ -82,7 +82,7 @@ VALUES (
 "5",
 "Comité des Régions",
 "\r\nCréé en 1994 à la suite de la signature du traité de Maastricht, le Comité européen des régions est l’assemblée des 350 élus locaux et régionaux issus de l’ensemble des 28 États membres de l’UE, représentant plus de 507 millions d’Européens. Sa mission consiste à associer les collectivités régionales et locales et les populations qu’elles représentent au processus décisionnel de l’UE et à les informer au sujet des politiques de l’Union. La Commission européenne, le Parlement européen et le Conseil sont tenus de consulter le Comité dans les domaines de décision politique concernant les régions et les villes. Le Comité des régions peut également saisir la Cour de justice de l’Union européenne en cas de violation de ses droits ou bien s’il estime qu’un texte de loi de l’UE viole le principe de subsidiarité ou ne respecte pas les compétences des collectivités régionales et locales.",
-"Comité des Régions.pdf",
+"https://drive.google.com/open?id=1AyO_CQKqqX4m96XA9CSa_Qd4iOR1Ono0",
 0,
 1,
 0
@@ -93,7 +93,7 @@ VALUES (
 "1",
 "Farm Europe",
 "GLOBAL FOOD FORUM\r\nA common vision\r\nA new ambition",
-"Farm Europe.pdf",
+"https://drive.google.com/open?id=1AMc_P9HOydS5YmILWXzxEIFNm8NAXoqV",
 0,
 1,
 0
@@ -104,7 +104,7 @@ VALUES (
 "1",
 "Fondation RISE",
 "CAP: Thinking Out of the Box Further modernisation of the CAP – why, what and how?",
-"Fondation RISE.pdf",
+"https://drive.google.com/open?id=1eNquuGegpl1EzZBqVN0RfSUzC94uTsdn",
 0,
 1,
 0
@@ -115,7 +115,7 @@ VALUES (
 "3",
 "JRC",
 "SCENAR 2030\r\nPATHWAYS FOR THE EUROPEAN AGRICULTURE AND FOOD SECTOR BEYOND 2020\r\n                   SUMMARY REPORT",
-"JRC.pdf",
+"https://drive.google.com/open?id=1tj_eyrsJLrnWQia5e8D0rmrr-HAU5h70",
 1,
 1,
 0
@@ -126,7 +126,7 @@ VALUES (
 "3",
 "Momagri",
 "Livre Blanc\r\nUn nouveau cap stratégique pour la PAC",
-"Momagri.pdf",
+"https://drive.google.com/open?id=1N-qvDecEM3G8NWm6mXL1j1N6HravJVQ9",
 1,
 1,
 0
