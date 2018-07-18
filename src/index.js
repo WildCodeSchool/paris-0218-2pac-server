@@ -7,18 +7,16 @@ const articlesRouter = require('./routes/articles.js')
 const documentsRouter = require('./routes/documents.js')
 const subscribersRouter = require('./routes/subscribers.js')
 const bodyParser = require('body-parser')
+
 const db = require(process.env.MOCKS ? './db/db-mocks.js' : './db/db-sql.js')
-
 const jwtSecret = process.env.JWT_SECRET || console.info('missing JWT_SECRET env variable') || 'SECRET'
-
-const port = 5000
+const port = process.env.PORT || 5000
 
 const app = express()
 
 // MIDDLEWARES
 
 const mediasFolderPath = path.join(__dirname, '../public')
-console.log({ mediasFolderPath })
 
 app.use('/medias', express.static(mediasFolderPath))
 
