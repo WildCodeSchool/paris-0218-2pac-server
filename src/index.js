@@ -10,7 +10,7 @@ const bodyParser = require('body-parser')
 
 const db = require(process.env.MOCKS ? './db/db-mocks.js' : './db/db-sql.js')
 const jwtSecret = process.env.JWT_SECRET || console.info('missing JWT_SECRET env variable') || 'SECRET'
-const port = process.env.PORT || 5000
+const port = process.env.PORT || console.info('missing PORT env variable -> fallback to 5000') || 5000
 
 const app = express()
 
