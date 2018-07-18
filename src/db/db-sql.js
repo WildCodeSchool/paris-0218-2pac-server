@@ -6,7 +6,7 @@ if (!process.env.DATABASE_URL) {
   console.warn(`'DATABASE_URL' environment variable is not set! -> fallback to default mysql default url: '${defaultUrl}'`)
 }
 const url = process.env.DATABASE_URL || defaultUrl
-const pool = mysql.createPool(`${url}?waitForConnections=true&connectionLimit=10&queueLimit=0&namedPlaceholders=true`) // namedPlaceholders: true
+const pool = mysql.createPool(`${url}?waitForConnections=true&connectionLimit=10&queueLimit=0&namedPlaceholders=true`)
 
 // Utils
 
