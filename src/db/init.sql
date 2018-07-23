@@ -93,4 +93,11 @@ firstName VARCHAR(90) NOT NULL,
 lastName VARCHAR(90) NOT NULL,
 phoneNumber TEXT(20) NOT NULL,
 email VARCHAR(90) NOT NULL
-)
+);
+
+CREATE TABLE statics
+(
+id INT PRIMARY KEY AUTO_INCREMENT,
+slug TEXT,
+content TEXT
+);
