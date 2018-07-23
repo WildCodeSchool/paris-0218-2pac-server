@@ -6,6 +6,7 @@ const usersRouter = require('./routes/users.js')
 const articlesRouter = require('./routes/articles.js')
 const documentsRouter = require('./routes/documents.js')
 const subscribersRouter = require('./routes/subscribers.js')
+const staticsRouter = require('./routes/statics.js')
 const bodyParser = require('body-parser')
 
 const db = require(process.env.MOCKS ? './db/db-mocks.js' : './db/db-sql.js')
@@ -82,7 +83,7 @@ app.post('/signin', async (req, res, next) => {
   res.json({ user: userSignature, token })
 })
 
-app.use('/', usersRouter, articlesRouter, documentsRouter, subscribersRouter)
+app.use('/', usersRouter, articlesRouter, documentsRouter, subscribersRouter, staticsRouter)
 
 app.use(function (req, res, next) {
   const err = new Error('Not Found')

@@ -126,6 +126,15 @@ VALUES
 
 const deleteSubscriber = id => exec(`DELETE FROM subscribers WHERE id=?`, [ id ])
 
+// STATICS
+
+const getStatics = () => exec(`SELECT * FROM statics;`)
+getStatics.byId = id => exec1(`SELECT * FROM statics WHERE id=?`, [ id ])
+getStatics.bySlug = slug => exec1(`SELECT * FROM statics WHERE slug=?`, [ slug ])
+
+const updateStatic = (id, updates) => exec(`
+  UPDATE statics SET ${sqlKeysPlaceholders(updates)} WHERE id=${id}`, updates)
+
 module.exports = {
   getUsers,
   newUser,
@@ -140,5 +149,7 @@ module.exports = {
   deleteDocument,
   getSubscribers,
   newSubscriber,
-  deleteSubscriber
+  deleteSubscriber,
+  getStatics,
+  updateStatic
 }
