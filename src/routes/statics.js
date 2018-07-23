@@ -10,11 +10,11 @@ router.get('/statics', (req, res, next) => {
 })
 
 router.put('/statics/:id', authRequired.asAdmin, (req, res, next) => {
-  const static = req.body
-  const staticId = Number(req.params.id) || static.id
+  const _static = req.body
+  const staticId = Number(req.params.id) || _static.id
 
   const updates = {
-    content: static.content || ''
+    content: _static.content || ''
   }
 
   db.updateStatic(staticId, updates)
