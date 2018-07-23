@@ -7,8 +7,9 @@
   "scripts": {
     "start": "nodemon src --ignore public",
     "db:init": "mysql -u root -p < ./src/db/init.sql",
+    "db:statics": "mysql -u root -p < ./src/db/inject-statics.sql",
     "db:mocks": "mysql -u root -p < ./src/db/inject-mocks.sql",
-    "db:rs": "npm run db:init && npm run db:mocks",
+    "db:rs": "npm run db:init && npm run db:statics && npm run db:mocks",
     "lint": "standard | snazzy",
     "lint:fix": "standard --fix",
     "test": "echo 'no test specified'"
