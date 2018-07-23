@@ -1,21 +1,18 @@
 const express = require('express')
 const router = express.Router()
 const { authRequired } = require('../middlewares.js')
-const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
+const db = require('../db/db-sql.js')
 
 router.get('/documents', (req, res, next) => {
   const isMember = req.user && !req.user.isAdmin
   const isAdmin = req.user && req.user.isAdmin
   const isDocumentPublic = doc => !doc.isMemberOnly
-  const isDocumentNotArchived = doc => !doc.isArchived
 
   db.getDocuments()
     .then(documents => {
       if (isAdmin) { return documents }
 
-      const notArchivedDocuments = documents.filter(isDocumentNotArchived)
-
-      return isMember ? notArchivedDocuments : notArchivedDocuments.filter(isDocumentPublic)
+      return isMember ? documents : documents.filter(isDocumentPublic)
     })
     .then(documents => res.json(documents))
     .catch(next)
@@ -29,8 +26,6 @@ router.post('/documents', authRequired.asAdmin, (req, res, next) => {
     title: body.title || '',
     shortDescription: body.shortDescription || '',
     isMemberOnly: body.isMemberOnly || false,
-    isResource: body.isResource || true,
-    isArchived: body.isArchived || false,
     url: body.url
   }
 
@@ -49,8 +44,6 @@ router.put('/documents/:id', authRequired.asAdmin, (req, res, next) => {
     title: body.title || '',
     shortDescription: body.shortDescription || '',
     isMemberOnly: body.isMemberOnly || false,
-    isResource: body.isResource || true,
-    isArchived: body.isArchived || false,
     url: body.url
   }
 

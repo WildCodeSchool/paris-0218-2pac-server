@@ -41,7 +41,8 @@ const deleteUser = id => exec(`DELETE FROM users WHERE id=?`, [ id ])
 
 const prepareArticle = article => ({
   ...article,
-  isMemberOnly: Boolean(article.isMemberOnly)
+  isMemberOnly: Boolean(article.isMemberOnly),
+  isStared: Boolean(article.isStared)
 })
 const prepareArticles = articles => articles.map(prepareArticle)
 
@@ -55,9 +56,9 @@ const newArticle = article => {
 
   return exec(`
     INSERT INTO articles
-      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly, tags)
+      (title, shortDescription, description, eventDate, categoryId, imageURL, imageDescription, isMemberOnly, isStared, tags)
     VALUES
-      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly, :tags)`,
+      (:title, :shortDescription, :description, :eventDate, :categoryId, :imageURL, :imageDescription, :isMemberOnly, :isStared, :tags)`,
   article)
 }
 
@@ -75,6 +76,7 @@ const updateArticle = article => {
       imageURL=:imageURL,
       imageDescription=:imageDescription,
       isMemberOnly=:isMemberOnly,
+      isStared=:isStared,
       tags=:tags
     WHERE id=:id`, article)
 }
@@ -85,9 +87,7 @@ const deleteArticle = id => exec(`DELETE FROM articles WHERE id=?`, [ id ])
 
 const prepareDocument = doc => ({
   ...doc,
-  isMemberOnly: Boolean(doc.isMemberOnly),
-  isResource: Boolean(doc.isResource),
-  isArchived: Boolean(doc.isArchived)
+  isMemberOnly: Boolean(doc.isMemberOnly)
 })
 const prepareDocuments = documents => documents.map(prepareDocument)
 
@@ -98,9 +98,9 @@ getDocuments.byId = id => exec1(`SELECT * FROM documents WHERE id=?`, [ id ]).th
 
 const newDocument = doc => exec(`
   INSERT INTO documents
-    (typeId, title, shortDescription, url, isMemberOnly, isResource, isArchived)
+    (typeId, title, shortDescription, url, isMemberOnly)
   VALUES
-    (:typeId, :title, :shortDescription, :url, :isMemberOnly, :isResource, :isArchived)`,
+    (:typeId, :title, :shortDescription, :url, :isMemberOnly)`,
 doc)
 
 const updateDocument = (id, updates) => exec(`

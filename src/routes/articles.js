@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { authRequired } = require('../middlewares.js')
-const db = require(process.env.MOCKS ? '../db/db-mocks.js' : '../db/db-sql.js')
+const db = require('../db/db-sql.js')
 
 router.get('/articles', (req, res, next) => {
   const isMember = req.user !== undefined

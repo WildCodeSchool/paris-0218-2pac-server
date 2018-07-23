@@ -35,6 +35,7 @@ categoryId INT NOT NULL,
 imageURL VARCHAR(2083),
 imageDescription TEXT,
 isMemberOnly BOOLEAN,
+isStared BOOLEAN DEFAULT 0,
 tags TEXT,
 FOREIGN KEY (categoryId)
   REFERENCES articles_categories(categoryId)
@@ -63,8 +64,6 @@ title VARCHAR(90),
 shortDescription TEXT,
 url VARCHAR(2083),
 isMemberOnly BOOLEAN,
-isResource BOOLEAN,
-isArchived BOOLEAN,
 FOREIGN KEY (typeId)
   REFERENCES documents_types(typeId)
   ON DELETE CASCADE
