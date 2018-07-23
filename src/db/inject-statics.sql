@@ -203,15 +203,6 @@ INSERT INTO statics (slug, content) VALUES (
 );
 
 INSERT INTO statics (slug, content) VALUES (
-"events-participation",
-"<div>
-  <h1>Participer à un évènement</h1>
-  <p> Contenu à venir ... </p>
-</div>"
-);
-
-
-INSERT INTO statics (slug, content) VALUES (
 "historique",
 "<div>
   <h1>Historique</h1>
