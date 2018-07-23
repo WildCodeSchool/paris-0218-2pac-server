@@ -22,10 +22,6 @@ router.get('/documents', (req, res, next) => {
 })
 
 router.post('/documents', authRequired.asAdmin, (req, res, next) => {
-  // if (!file) {
-  //   return next(Error('missing document'))
-  // }
-
   const body = req.body
 
   const doc = {
@@ -33,7 +29,7 @@ router.post('/documents', authRequired.asAdmin, (req, res, next) => {
     title: body.title || '',
     shortDescription: body.shortDescription || '',
     isMemberOnly: body.isMemberOnly || false,
-    isResource: body.isResource || false,
+    isResource: body.isResource || true,
     isArchived: body.isArchived || false,
     url: body.url
   }
@@ -53,7 +49,7 @@ router.put('/documents/:id', authRequired.asAdmin, (req, res, next) => {
     title: body.title || '',
     shortDescription: body.shortDescription || '',
     isMemberOnly: body.isMemberOnly || false,
-    isResource: body.isResource || false,
+    isResource: body.isResource || true,
     isArchived: body.isArchived || false,
     url: body.url
   }
