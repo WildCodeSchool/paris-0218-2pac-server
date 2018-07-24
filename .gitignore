@@ -62,3 +62,6 @@ typings/
 
 # app specifics
 public
+
+# dump SQL
+*.dump.sql
