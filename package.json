@@ -1,15 +1,16 @@
 {
   "name": "paris-0218-2pac-server",
   "version": "1.0.0",
-  "proxy": "http://localhost:1107",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src --ignore public",
     "db:init": "mysql -u root -p < ./src/db/init.sql",
+    "db:init:dump": "mysql -u root -p < db-dump.sql",
     "db:statics": "mysql -u root -p < ./src/db/inject-statics.sql",
+    "db:rs": "npm run db:init && npm run db:statics",
     "db:mocks": "mysql -u root -p < ./src/db/inject-mocks.sql",
-    "db:rs": "npm run db:init && npm run db:statics && npm run db:mocks",
+    "db:dump": "mysqldump -u root pac > db-dump.sql",
     "lint": "standard | snazzy",
     "lint:fix": "standard --fix",
     "test": "echo 'no test specified'"
